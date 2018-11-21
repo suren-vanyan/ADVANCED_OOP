@@ -9,9 +9,9 @@ namespace TrainStation
     {
         private string _destination;
         private int _trainNumber;
-        private int _departureTime;
+        private DateTime _departureTime;
      
-        public Train(string destination,int trainNumber,int departureTime)
+        public Train(string destination,int trainNumber,DateTime departureTime)
         {
             _destination = destination;
             _departureTime = departureTime;

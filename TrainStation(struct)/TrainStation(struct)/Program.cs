@@ -24,8 +24,8 @@ namespace TrainStation
                 trainNumber = result ? trainNumber : 0;
 
                 Console.Write("Add departureTime:");
-                bool d = int.TryParse(Console.ReadLine(),out int departureTime);
-                departureTime = d ? departureTime : 0;
+                bool d = DateTime.TryParse(Console.ReadLine(),out DateTime departureTime);
+                departureTime = d ? departureTime : DateTime.Now;
 
                 trainStation.AddTrain(new Train(destination, trainNumber, departureTime));
                 Console.WriteLine("To add a new train press key 'a'");
