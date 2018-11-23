@@ -17,11 +17,20 @@ namespace EmployeeEnum
             {
                 if (accountant.AskForBonus((WorkPositions)workers.GetValue(i), hours))
                 {
-                    Console.WriteLine($"Give a bonus to an {(WorkPositions)workers.GetValue(i)}");
+                    Console.WriteLine($"Give a bonus to an {workers.GetValue(i)}");
                 }
             }
-               
-            
+
+            Console.WriteLine(new string('*',50));
+            //OR
+
+            foreach (var worker in Enum.GetValues(typeof(WorkPositions)))
+            {
+                if (accountant.AskForBonus((WorkPositions)worker, hours))
+                {
+                    Console.WriteLine($"Give a bonus to an {worker}");
+                }
+            }
         }
     }
 }
