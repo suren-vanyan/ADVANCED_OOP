@@ -1,7 +1,6 @@
 # My favorite books
-##### The projects I have created are from this book :stuck_out_tongue_winking_eye::stuck_out_tongue_winking_eye:
-# :man: Adam Freeman 
-##### Adam Freeman is an experienced IT professional who has held senior positions in a range of companies,most recently serving as chief technology officer and chief operating officer of a global bank. Now retired, he spends his time writing and long-distance running
+# :man: Andrew Troelsen :man:Philip Japikse  
+## Pro C# 7 With .NET and .NET Core
 # :book:  :point_right: Pro ASP.NET Core MVC 2, :thumbsup::thumbsup:
 <ul>
 <li><a href="https://www.apress.com/br/book/9781484231494">:heavy_dollar_sign::heavy_dollar_sign: Pro ASP.NET Core MVC 2</a>
