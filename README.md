@@ -1,9 +1,9 @@
 # My favorite books
 # :point_down::man: Andrew Troelsen :man:Philip Japikse  
-## Pro C# 7 With .NET and .NET Core
-# :book:  :point_right: Pro ASP.NET Core MVC 2, :thumbsup::thumbsup:
+## :book: Pro C# 7 With .NET and .NET Core
+
 <ul>
- <li><a href="https://www.apress.com/la/book/9781484230176">:rocket::mortar_board: :boy: Pro ASP.NET Core MVC 2</a>
+ <li><a href="https://www.apress.com/la/book/9781484230176">:rocket:Pro C# 7 With .NET and .NET Core</a>
 </ul>
 <p align="Left"><img src="https://images.springer.com/sgw/books/medium/9781484230176.jpg" ></p>
 
