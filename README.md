@@ -6,7 +6,7 @@
 <li><a href="https://www.apress.com/br/book/9781484231494">:heavy_dollar_sign::heavy_dollar_sign: Pro ASP.NET Core MVC 2</a>
  <li><a href="http://sd.blackball.lv/library/Pro_ASP.Net_Core_MVC_(2016).pdf">:mortar_board: :boy: Pro ASP.NET Core MVC 2</a>
 </ul>
-<p align="Left"><img src="http://t2.gstatic.com/images?q=tbn:ANd9GcRmCJpbdmqgyj0w3I2zuJN-aldtuiIPYdVP9LtRPR7Sh7fTfPYf" ></p>
+<p align="Left"><img src="https://images.springer.com/sgw/books/medium/9781484230176.jpg" ></p>
 
 ### Description :pushpin:
  ASP.NET Core MVC is a radical shift for web developers using the Microsoft platform. It emphasizes
