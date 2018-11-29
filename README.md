@@ -1,7 +1,14 @@
-# Additional Tasks (OOP)
+# :books:My Favorite Books:books:
+## :point_down::man: Andrew Troelsen :man:Philip Japikse  
+### :book: <a href="https://www.apress.com/la/book/9781484230176">:rocket:Pro C# 7 With .NET and .NET Core</a>
+<p align="Left"><img src="https://images.springer.com/sgw/books/medium/9781484230176.jpg" ></p>
 
- <img  src="https://camo.githubusercontent.com/0617f4657fef12e8d16db45b8d73def73144b09f/68747470733a2f2f646576656c6f7065722e6665646f726170726f6a6563742e6f72672f7374617469632f6c6f676f2f6373686172702e706e67"     
- alt="C# logo" style="float:center; margin-right:25px;" width="454" height="477" />
+
+## :point_down::man: Jeffrey Richter
+### :book: <a href="https://ptgmedia.pearsoncmg.com/images/9780735667457/samplepages/9780735667457.pdf">:rocket:CLR via C#</a>
+<p align="Left"><img src="https://images-na.ssl-images-amazon.com/images/I/41zZ5aN3ypL._SX258_BO1,204,203,200_.jpg" ></p>
+
+
 
 
 
