@@ -7,7 +7,8 @@ namespace OOP.Advanced.Collection.MyDictionary
         public static void BeginTranslate()
         {
             Console.OutputEncoding = System.Text.Encoding.UTF8;
-                   
+            Console.InputEncoding = System.Text.Encoding.UTF8;
+
             Console.WriteLine("To translate text \nFrom Armenian to English,press 1 \nFrom English to Armenian,press 2" +
                 "\nFrom English to Russian,press 3");
             string text = string.Empty;
@@ -31,7 +32,7 @@ namespace OOP.Advanced.Collection.MyDictionary
                         break;
                     case 3:
                         //From English To Russian
-                        Console.WriteLine("Please enter a English word phrase ");
+                        Console.WriteLine("Please enter a English word phrase ");//does not support yet
                         text = Console.ReadLine();
                         text = text.ToLower().TranslateFromEnglishToLanguage(Language.Russain);
                         break;
