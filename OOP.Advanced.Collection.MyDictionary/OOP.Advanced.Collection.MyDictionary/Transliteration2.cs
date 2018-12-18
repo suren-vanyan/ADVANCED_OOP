@@ -131,11 +131,11 @@ namespace OOP.Advanced.Collection.MyDictionary
             }
 
 
-            for (int i = 0; i <= 32; i++)
-            {
-                str = str.Replace(rusAlphabetUpper[i], engAlphabetUpper[i]);
-                str = str.Replace(rusAlphabetLower[i], engAlphabetLower[i]);
-            }
+            //for (int i = 0; i <= 32; i++)
+            //{
+            //    str = str.Replace(rusAlphabetUpper[i], engAlphabetUpper[i]);
+            //    str = str.Replace(rusAlphabetLower[i], engAlphabetLower[i]);
+            //}
 
             return str;
         }

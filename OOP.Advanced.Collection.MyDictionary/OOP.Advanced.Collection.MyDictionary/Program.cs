@@ -18,16 +18,19 @@ namespace OOP.Advanced.Collection.MyDictionary
                 switch (int.Parse(Console.ReadLine()))
                 {
                     case 1:
-                        Console.WriteLine("Please enter a Armenian word phrase ");
+                        //From Aremnian to English
+                        Console.WriteLine("Please enter a Armenian word phrase ");//does not support yet
                         text = Console.ReadLine();
                         text = text.ToLower().TranslateFromArmenianToEnglish(Language.Armenian);
                         break;
                     case 2:
+                        //From English To Armenian
                         Console.WriteLine("Please enter a English word phrase ");
                         text = Console.ReadLine();
                         text = text.ToLower().TranslateFromEnglishToLanguage(Language.Armenian);
                         break;
                     case 3:
+                        //From English To Russian
                         Console.WriteLine("Please enter a English word phrase ");
                         text = Console.ReadLine();
                         text = text.ToLower().TranslateFromEnglishToLanguage(Language.Russain);
