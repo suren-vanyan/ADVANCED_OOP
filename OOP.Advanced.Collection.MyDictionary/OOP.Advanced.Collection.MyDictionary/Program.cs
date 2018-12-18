@@ -8,7 +8,8 @@ namespace OOP.Advanced.Collection.MyDictionary
         {
             Console.OutputEncoding = System.Text.Encoding.UTF8;
                    
-            Console.WriteLine("To translate text \nFrom Armenian to English,press 1 \nFrom English to Armenian,press 2");
+            Console.WriteLine("To translate text \nFrom Armenian to English,press 1 \nFrom English to Armenian,press 2" +
+                "\nFrom English to Russian,press 3");
             string text = string.Empty;
             try
             {
@@ -19,12 +20,17 @@ namespace OOP.Advanced.Collection.MyDictionary
                     case 1:
                         Console.WriteLine("Please enter a Armenian word phrase ");
                         text = Console.ReadLine();
-                        text = text.ToLower().TranslateFromEnglishToArmenian(Language.Armenian);
+                        text = text.ToLower().TranslateFromArmenianToEnglish(Language.Armenian);
                         break;
                     case 2:
                         Console.WriteLine("Please enter a English word phrase ");
                         text = Console.ReadLine();
-                        text = text.ToLower().TranslateFromEnglishToArmenian(Language.Armenian);
+                        text = text.ToLower().TranslateFromEnglishToLanguage(Language.Armenian);
+                        break;
+                    case 3:
+                        Console.WriteLine("Please enter a English word phrase ");
+                        text = Console.ReadLine();
+                        text = text.ToLower().TranslateFromEnglishToLanguage(Language.Russain);
                         break;
                     default:
                         break;

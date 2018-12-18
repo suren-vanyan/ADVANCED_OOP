@@ -6,7 +6,7 @@ namespace OOP.Advanced.Collection.MyDictionary
 {
     public static partial class Transliteration
     {
-        public static string TranslateFromEnglishToArmenian(this string source, Language toLanguage)
+        public static string TranslateFromEnglishToLanguage(this string source, Language toLanguage)
         {
             if (string.IsNullOrEmpty(source))
                 return source;
@@ -15,10 +15,9 @@ namespace OOP.Advanced.Collection.MyDictionary
             {
                 // my translator does not support Russian language yet
                 case Language.Armenian:
-                    return EnglishToArmenian(source);
-                  
-                //case Language.Russain:
-                //    return EnglishToRussian(source);
+                    return EnglishToArmenian(source);            
+                case Language.Russain:
+                   return EnglishToRussian(source);
 
             }
 
@@ -32,7 +31,7 @@ namespace OOP.Advanced.Collection.MyDictionary
 
             switch (toLanguage)
             {
-             //   my translator does not support Russian language yet
+                //   my translator does not support  translate from Armenian to Russian language yet
                 //case Language.Russain:
                 //    return ArmenianToRussian(source);
                 case Language.English:
