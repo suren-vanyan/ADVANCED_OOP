@@ -36,7 +36,7 @@ namespace OOP.Advanced.Collection.MyDictionary
 
         private static string EnglishToRussian(string text)
         {
-            text = Translit(text);
+            text = TranslitEngRus(text);
             return text;
         }
 
@@ -90,7 +90,7 @@ namespace OOP.Advanced.Collection.MyDictionary
 
         }
 
-        public static string Translit(string str)
+        public static string TranslitEngRus(string str)
         {           
             string[] engAlphabetUpper = { "A", "B", "V", "G", "D", "E", "Yo", "Zh", "Z", "I", "Y", "K", "L", "M", "N", "O", "P", "R", "S", "T", "U", "F", "Kh", "Ts", "Ch", "Sh", "Shch", "I", "Y", "'", "E", "Yu", "Ya" };
             string[] engAlphabetLower = { "a", "b", "v", "g", "d", "e", "yo", "zh", "z", "i", "y", "k", "l", "m", "n", "o", "p", "r", "s", "t", "u", "f", "kh", "ts", "ch", "sh", "shch", "i", "y", "'", "e", "yu", "ya" };
