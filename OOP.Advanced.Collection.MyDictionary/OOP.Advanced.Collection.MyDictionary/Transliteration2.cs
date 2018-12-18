@@ -40,7 +40,7 @@ namespace OOP.Advanced.Collection.MyDictionary
             return text;
         }
 
-        static string OrthographyEngArm(string text) //ուղղագրություն
+        static string OrthographyEngArm(string text) 
         {
             text = text.Replace("սh", "շ");
             text = text.Replace("սh", "շ");
@@ -107,8 +107,6 @@ namespace OOP.Advanced.Collection.MyDictionary
                     {
 
                     }
-                
-
                     _mydict.Add(engAlphabetLower[i], rusAlphabetLower[i]);
                 }
 

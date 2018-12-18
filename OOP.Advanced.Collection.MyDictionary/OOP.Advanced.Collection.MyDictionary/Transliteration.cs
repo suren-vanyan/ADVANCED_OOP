@@ -13,7 +13,7 @@ namespace OOP.Advanced.Collection.MyDictionary
 
             switch (toLanguage)
             {
-                // my translator does not support Russian language yet
+                
                 case Language.Armenian:
                     return EnglishToArmenian(source);            
                 case Language.Russain:
