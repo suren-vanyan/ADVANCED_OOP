@@ -13,7 +13,7 @@ namespace OOP.Advanced.Collection.MyDictionary
 
             switch (toLanguage)
             {
-
+                // my translator does not support Russian language yet
                 case Language.Armenian:
                     return EnglishToArmenian(source);
                   
@@ -32,6 +32,7 @@ namespace OOP.Advanced.Collection.MyDictionary
 
             switch (toLanguage)
             {
+             //   my translator does not support Russian language yet
                 //case Language.Russain:
                 //    return ArmenianToRussian(source);
                 case Language.English:
@@ -42,9 +43,5 @@ namespace OOP.Advanced.Collection.MyDictionary
 
             throw new NotSupportedException();
         }
-
-
-     
-
     }
 }
