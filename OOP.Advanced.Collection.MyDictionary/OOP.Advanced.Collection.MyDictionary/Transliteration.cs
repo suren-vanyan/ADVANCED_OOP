@@ -24,7 +24,7 @@ namespace OOP.Advanced.Collection.MyDictionary
             throw new NotSupportedException();
         }
 
-        public static string TranslateFromArmenianToEnglish(this string source, Language toLanguage)
+        public static string TranslateFromArmenianToLanguage(this string source, Language toLanguage)
         {
             if (string.IsNullOrEmpty(source))
                 return source;

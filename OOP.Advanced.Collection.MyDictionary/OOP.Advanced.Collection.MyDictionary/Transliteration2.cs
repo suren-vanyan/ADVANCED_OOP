@@ -96,7 +96,7 @@ namespace OOP.Advanced.Collection.MyDictionary
 
         }
 
-        public static string TranslitEngRus(string str)
+        private static string TranslitEngRus(string str)
         {
             Console.OutputEncoding = System.Text.Encoding.Unicode;
             Console.InputEncoding = System.Text.Encoding.Unicode;
