@@ -20,17 +20,7 @@ namespace OOP.Advanced.Collection.MyDictionary
             return temp;
         }
 
-        private static string ArmenianToEnglish(string text)
-        {
-            AddKeyAndValue(_mydict);
-            text = OrthographyEngArm(text);
-            string temp = string.Empty;
-            for (int i = 0; i < text.Length; i++)
-            {
-                temp += _mydict[text[i].ToString()];
-            }
-            return text;
-        }
+   
 
         private static string RussianToEnglish(string text)
         {

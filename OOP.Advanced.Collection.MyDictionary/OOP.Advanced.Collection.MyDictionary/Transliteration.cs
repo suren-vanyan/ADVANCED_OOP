@@ -14,13 +14,11 @@ namespace OOP.Advanced.Collection.MyDictionary
             switch (fromLanguage)
             {
                 //   my translator does not support  translate from Armenian to Russian,and from Russian To English language yet
-                case Language.Armenian://From English to Armenian
+                case Language.English://From English to Armenian
                     return EnglishToArmenian(source);
                 case Language.Russain:
                     return RussianToEnglish(source);
-                case Language.English:
-                    return ArmenianToEnglish(source);
-
+          
             }
 
             throw new NotSupportedException();
