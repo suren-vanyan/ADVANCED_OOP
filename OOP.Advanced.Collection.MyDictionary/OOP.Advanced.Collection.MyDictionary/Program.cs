@@ -29,7 +29,7 @@ namespace OOP.Advanced.Collection.MyDictionary
                         break;
                     case 3:
                         //From Russian To English
-                        Console.WriteLine("Please enter a English word phrase ");//does not support yet
+                        Console.WriteLine("Please enter a English word phrase ");
                         text = Console.ReadLine();
                         text = text.ToLower().TranslateFromLanguageToLanguage(Language.Russain);
                         break;

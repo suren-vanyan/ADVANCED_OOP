@@ -6,14 +6,10 @@ namespace OOP.Advanced.Collection.MyDictionary
 {
    
     public enum Language
-    {
-    
+    { 
         Unknown,
         Russain,
         Armenian,
-        English,
-      
-
-    
+        English,   
     }
 }

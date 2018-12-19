@@ -40,7 +40,7 @@ namespace OOP.Advanced.Collection.MyDictionary
 
         static string OrthographyEngArm(string text) 
         {
-            text = text.Replace("սh", "շ");
+            text = text.Replace("sh", "շ");
             text = text.Replace("jh", "ժ");
             text = text.Replace("ch", "չ");
             text = text.Replace("gh", "ղ");
