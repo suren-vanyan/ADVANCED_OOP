@@ -16,22 +16,22 @@ namespace OOP.Advanced.Collection.MyDictionary
                 switch (int.Parse(Console.ReadLine()))
                 {
                     case 1:
-                        //From Aremnian to English
-                        Console.WriteLine("Please enter a Armenian word phrase ");//does not support yet
-                        text = Console.ReadLine();
-                        text = text.ToLower().TranslateFromArmenianToLanguage(Language.English);
-                        break;
-                    case 2:
-                        //From English To Armenian
-                        Console.WriteLine("Please enter a English word phrase ");
-                        text = Console.ReadLine();
-                        text = text.ToLower().TranslateFromEnglishToLanguage(Language.Armenian);
-                        break;
-                    case 3:
-                        //From English To Russian
+                        //From English to Armenian
                         Console.WriteLine("Please enter a English word phrase ");//does not support yet
                         text = Console.ReadLine();
-                        text = text.ToLower().TranslateFromEnglishToLanguage(Language.Russain);
+                        text = text.ToLower().TranslateFromLanguageToLanguage(Language.English);
+                        break;
+                    case 2:
+                        //From Armenian To English
+                        Console.WriteLine("Please enter a Armenian word phrase ");
+                        text = Console.ReadLine();
+                        text = text.ToLower().TranslateFromLanguageToLanguage(Language.Armenian);
+                        break;
+                    case 3:
+                        //From Russian To English
+                        Console.WriteLine("Please enter a English word phrase ");//does not support yet
+                        text = Console.ReadLine();
+                        text = text.ToLower().TranslateFromLanguageToLanguage(Language.Russain);
                         break;
                     default:
                         break;

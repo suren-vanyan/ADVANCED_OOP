@@ -32,7 +32,7 @@ namespace OOP.Advanced.Collection.MyDictionary
             return text;
         }
 
-        private static string EnglishToRussian(string text)
+        private static string RussianToEnglish(string text)
         {
             text = TranslitEngRus(text);
             return text;
@@ -98,8 +98,8 @@ namespace OOP.Advanced.Collection.MyDictionary
 
         private static string TranslitEngRus(string str)
         {
-            Console.OutputEncoding = System.Text.Encoding.Unicode;
-            Console.InputEncoding = System.Text.Encoding.Unicode;
+            Console.OutputEncoding = System.Text.Encoding.UTF8;
+            Console.InputEncoding = System.Text.Encoding.UTF8;
             string[] engAlphabetUpper = { "A", "B", "V", "G", "D", "E", "Yo", "Zh", "Z", "I", "Y", "K", "L", "M", "N", "O", "P", "R", "S", "T", "U", "F", "Kh", "Ts", "Ch", "Sh", "Shch", "\"", "iY", "'", "Ea", "Yu", "Ya" };
             string[] engAlphabetLower = { "a", "b", "v", "g", "d", "e", "yo", "zh", "z", "i", "y", "k", "l", "m", "n", "o", "p", "r", "s", "t", "u", "f", "kh", "ts", "ch", "sh", "shch", "\"", "iy", "'", "ea", "yu", "ya" };
             string[] rusAlphabetUpper = { "А", "Б", "В", "Г", "Д", "Е", "Ё", "Ж", "З", "И", "Й", "К", "Л", "М", "Н", "О", "П", "Р", "С",   "Т", "У",  "Ф", "Х",  "Ц",  "Ч",  "Ш",   "Щ",   "Ъ",  "Ы",  "Ь", "Э", "Ю", "Я" };
@@ -129,16 +129,15 @@ namespace OOP.Advanced.Collection.MyDictionary
             {
                 for (int i = 0; i <= 32; i++)
                 {
-                    str = str.Replace(engAlphabetUpper[i], rusAlphabetUpper[i]);
+                    str = str.Replace(rusAlphabetUpper[i], engAlphabetUpper[i]);
                 }
-                return str;
-            }
 
-
-            for (int i = 0; i <= 32; i++)
-            {
-                str = str.Replace(rusAlphabetUpper[i], engAlphabetUpper[i]);
-                str = str.Replace(rusAlphabetLower[i], engAlphabetLower[i]);
+                string temp = string.Empty;
+                foreach (var item in str)
+                {
+                    temp += _mydict[item.ToString()];
+                }
+                return temp;
             }
 
             return str;
