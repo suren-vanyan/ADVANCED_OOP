@@ -1,10 +1,10 @@
-## :point_right: LINQ TO Objects
+## :point_right: System IO
 
 <a href="https://www.youtube.com/watch?v=8YGGX1ZEgbg">:punch::muscle:Deontay Wilder Vs. Tyson Fury:punch::muscle:</a>
 
-<img class="irc_mi" src="https://e3.365dm.com/18/12/1096x616/skynews-deontay-wilder-tyson-fury_4506269.jpg?20181202064233" onload="typeof google==='object'&amp;&amp;google.aft&amp;&amp;google.aft(this)"  style="margin-top: 91px;" alt="Картинки по запросу deontay wilder vs tyson fury">
+<img class="irc_mi" src="https://thumbs.dreamstime.com/z/%D0%BB%D1%8E-%D0%B8-%D0%B2-%D0%B1%D0%B0%D0%BD%D0%BA%D0%B5-%D0%B1%D0%B0%D0%BD%D0%BA%D0%BE%D0%B2%D1%81%D0%BA%D0%BE%D0%B5-%D0%BE%D0%B1%D1%81-%D1%83%D0%B6%D0%B8%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5-%D0%B2%D0%B5%D0%BA%D1%82%D0%BE%D1%80%D0%B0-%D0%BA%D0%BE%D0%BD%D1%86%D0%B5%D0%BF%D1%86%D0%B8%D1%8F-%D0%B5-%D0%B0-87843556.jpg" onload="typeof google==='object'&amp;&amp;google.aft&amp;&amp;google.aft(this)"  style="margin-top: 91px;" alt="Bank and client">
 
-
+<img class="irc_mi"  alt="Похожее изображение" onload="typeof google==='object'&amp;&amp;google.aft&amp;&amp;google.aft(this)" width="304" height="325" style="margin-top: 14px;">
 ## Boxers List
 
 ```C#
