@@ -2,10 +2,9 @@
 
 <a href="https://www.youtube.com/watch?v=8YGGX1ZEgbg">:punch::muscle:Deontay Wilder Vs. Tyson Fury:punch::muscle:</a>
 
-<img class="irc_mi" src="https://thumbs.dreamstime.com/z/%D0%BB%D1%8E-%D0%B8-%D0%B2-%D0%B1%D0%B0%D0%BD%D0%BA%D0%B5-%D0%B1%D0%B0%D0%BD%D0%BA%D0%BE%D0%B2%D1%81%D0%BA%D0%BE%D0%B5-%D0%BE%D0%B1%D1%81-%D1%83%D0%B6%D0%B8%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5-%D0%B2%D0%B5%D0%BA%D1%82%D0%BE%D1%80%D0%B0-%D0%BA%D0%BE%D0%BD%D1%86%D0%B5%D0%BF%D1%86%D0%B8%D1%8F-%D0%B5-%D0%B0-87843556.jpg" onload="typeof google==='object'&amp;&amp;google.aft&amp;&amp;google.aft(this)"  style="margin-top: 91px;" alt="Bank and client">
+<img class="irc_mi" src="https://user-images.githubusercontent.com/38188753/50302490-b0913f00-04a3-11e9-8543-a0b3dff929d6.jpg" width="251" height="250" onload="typeof google==='object'&amp;&amp;google.aft&amp;&amp;google.aft(this)"  style="margin-top: 91px;" alt="Bank and client">
 
-<img class="irc_mi"  alt="Похожее изображение" onload="typeof google==='object'&amp;&amp;google.aft&amp;&amp;google.aft(this)" width="304" height="325" style="margin-top: 14px;">
-## Boxers List
+
 
 ```C#
         List<Boxer> boxersList = new List<Boxer>
