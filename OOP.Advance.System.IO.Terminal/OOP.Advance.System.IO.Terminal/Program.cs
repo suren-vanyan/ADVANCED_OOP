@@ -50,19 +50,29 @@ namespace OOP.Advance.System.IO.Terminal
 
         static void Main(string[] args)
         {
-
             DirectoryInfo directory = new DirectoryInfo("D:\\");
             User user = new User() { FistName = "Bill", LastName = "Gates", Money = 100000M, Age = 63 };
             Console.WriteLine($"{user.FistName} have a {user.Money:C2}");
-            WriteBalance(userPath, user);
-            Console.WriteLine($"{user.FistName} is looking for a terminal");
-            //imagine that the user is looking for a terminal
-            // FindDirectory(directory);
+           
+            try
+            {
+                WriteBalance(userPath, user);
+                Console.WriteLine($"{user.FistName} is looking for a terminal");
+                //imagine that the user is looking for a terminal
+                // FindDirectory(directory);
 
-            //Client Put Money
-            UniversalTerminal.Put(5000);
+                //Client Put Money
+                UniversalTerminal.Put(5000);
 
-            PrintCurrentBalance(terminalPath);
+                PrintCurrentBalance(terminalPath);
+            }
+            catch (Exception e)
+            {
+
+                Console.WriteLine(e.Message);
+            }
+            
+           
 
 
         }
