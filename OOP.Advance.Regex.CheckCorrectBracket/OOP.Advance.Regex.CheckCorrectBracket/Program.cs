@@ -5,11 +5,12 @@ using System.Text.RegularExpressions;
 using System.Collections.Generic;
 
 namespace OOPAdvanceRegex
-{
+{// //Given a string input: return true, if the set of brackets are written in correct form and order.
     class Program
     {
         static void Main(string[] args)
         {
+
             string input = @"{((<qazwsx>[0-9a-z]))(\.(?!\.))(abcde)<123[0-9a-z]test{hi}>([-!#\$%&'])}"; 
             Console.WriteLine(CheckCorrectBracket(input));
         }
@@ -17,8 +18,8 @@ namespace OOPAdvanceRegex
         static bool CheckGroupValueBYCount(string input)
         {
             //here I divided into two groups
-            string patternOne = @"(?<bracket>[({<\[])";
-            string patternTwo = @"(?<bracket2>[)}>\]])";
+            string patternOne = @"([({<\[])";
+            string patternTwo = @"([)}>\]])";
             var regexOne = new Regex(patternOne);
             var regexTwo = new Regex(patternTwo);
 
@@ -44,9 +45,7 @@ namespace OOPAdvanceRegex
             var groupTwoCount = (from Match two in regexTwo.Matches(input)
                                  select two.Value).Count();
 
-            return groupOneCount == groupTwoCount ;
-
-         
+            return groupOneCount == groupTwoCount ;      
         }
 
         static bool CheckCorrectBracket(string input)
