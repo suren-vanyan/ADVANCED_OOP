@@ -44,7 +44,7 @@ namespace OOPAdvanceRegex
             var groupTwoCount = (from Match two in regexTwo.Matches(input)
                                  select two.Value).Count();
 
-            return groupOneCount != groupTwoCount ? false : true;
+            return groupOneCount == groupTwoCount ;
 
          
         }
@@ -80,7 +80,7 @@ namespace OOPAdvanceRegex
 
                 }
 
-                return temp == string.Empty ? true : false;
+                return temp == string.Empty ;
                                       
             }
             else
