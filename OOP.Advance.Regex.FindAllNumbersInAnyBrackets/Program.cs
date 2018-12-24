@@ -22,9 +22,8 @@ namespace OOP.Advance
             var collection = Regex.Matches(input, pattern);
            
             foreach (Match group in collection)
-            {
-                ConsoleColor c = (ConsoleColor)(new Random().Next(1, 15));
-                Console.ForegroundColor = c;
+            {              
+                Console.ForegroundColor = (ConsoleColor)(new Random().Next(1, 15));
                 var newMatchCollection = Regex.Matches(group.Value, @"(\d+[.]\d+)");
                 foreach (var item in newMatchCollection)
                 {
