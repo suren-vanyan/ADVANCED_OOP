@@ -16,6 +16,7 @@ namespace OOPAdvanceRegex
 
         static bool CheckGroupValueBYCount(string input)
         {
+            //here I divided into two groups
             string patternOne = @"(?<bracket>[({<\[])";
             string patternTwo = @"(?<bracket2>[)}>\]])";
             var regexOne = new Regex(patternOne);
@@ -36,7 +37,7 @@ namespace OOPAdvanceRegex
             }
 
             Console.ResetColor();
-
+            //here I check the number of elements are equal or not
             var groupOneCount = (from Match one in regexOne.Matches(input)
                                  select one.Value).Count();
 
