@@ -9,17 +9,18 @@ namespace OOP.Advance
         static void Main(string[] args)
         {
             // Find a List of floating point numbers, which occur in any type of brackets.
-            string test = @"(10.77)qazwsx(0.5)dj[99.2]sj.a'<6.7>{11.6}sjzx,\,[4.5]<68.4> ";
+            string test = @"(10.77)qaz<12.98>wsx(0.5)dj[99.2]sj.a'<6.7>{11.6}sjzx,\,[4.5]<68.4> ";
             FindAllFlPointInAnyBrackets(test);
 
         }
 
         static void FindAllFlPointInAnyBrackets(string input)
         {
-
-          string matchedSubexpressions = @"(\(\d+[.]\d+\))|(\[\d+[.]\d+])|(\<\d+[.]\d+\>)|(\{\d+[.]\d+\})";
-          string namematchedSubexpressions = @"(?<brTwo>\[\d+[.]\d+])|(?<brOne>\(\d+[.]\d+\))|(?<brThree>\<\d+[.]\d+\>)|(?<brFour>\{\d+[.]\d+\})";
-            var collection = Regex.Matches(input, matchedSubexpressions);
+            //different syntax but group in the same way
+            string matchedSubexpressions = @"(\(\d+[.]\d+\))|(\[\d+[.]\d+])|(\<\d+[.]\d+\>)|(\{\d+[.]\d+\})";
+            string namematchedSubexpressions = @"(?<brOne>\[\d+[.]\d+])|(?<brTwo>\(\d+[.]\d+\))|(?<brThree>\<\d+[.]\d+\>)|(?<brFour>\{\d+[.]\d+\})";
+            string namematchedSubexpressions2 = @"(?'br1'\[\d+[.]\d+])|(?'br2'\(\d+[.]\d+\))|(?'br3'\<\d+[.]\d+\>)|(?'br4'\{\d+[.]\d+\})";
+            var collection = Regex.Matches(input, namematchedSubexpressions2);
 
             foreach (Match group in collection)
             {
