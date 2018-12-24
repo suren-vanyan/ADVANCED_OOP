@@ -33,7 +33,7 @@ namespace OOPAdvanceRegex
             Console.ForegroundColor = ConsoleColor.Red;
             foreach (Match item in regexTwo.Matches(input))
             {
-                Console.WriteLine($"RegexOne: Index{item.Index},Value{item.Value}");
+                Console.WriteLine($"RegexTwo: Index{item.Index},Value{item.Value}");
             }
 
             Console.ResetColor();
@@ -44,9 +44,9 @@ namespace OOPAdvanceRegex
             var groupTwoCount = (from Match two in regexTwo.Matches(input)
                                  select two.Value).Count();
 
-            if (groupOneCount != groupTwoCount)
-                return false;
-            return true;
+            return groupOneCount != groupTwoCount ? false : true;
+
+         
         }
 
         static bool CheckCorrectBracket(string input)
@@ -55,8 +55,8 @@ namespace OOPAdvanceRegex
             //and check if the groups are not equal return false results
             if (CheckGroupValueBYCount(input))
             {
-                string patternOne = @"(?<bracket>[(){}<>\[\]])";
-                var regex = new Regex(patternOne);
+                string pattern = @"(?<bracket>[(){}<>\[\]])";
+                var regex = new Regex(pattern);
                 string temp = string.Empty;
 
                 foreach (Match item in regex.Matches(input))
@@ -80,12 +80,8 @@ namespace OOPAdvanceRegex
 
                 }
 
-                if (temp == string.Empty)
-                    return true;
-                else
-                    return false;
-               
-                                            
+                return temp == string.Empty ? true : false;
+                                      
             }
             else
                 return false;
