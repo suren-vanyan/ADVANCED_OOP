@@ -11,8 +11,7 @@ namespace OOPAdvanceRegex
     {
         static void Main(string[] args)
         {
-
-            string input = @"{((<qazwsx>[0-9a-z]))(\.(?!\.))(abcde)<123[0-9a-z]test{hi}>([-!#\$%&'])}"; 
+            string input = @"{((<qazwsx>[0-9a-z]))(\.(?!\.))(abcde)<123[0-9a-z]test{hi}>([-!#\$%&'])}";
             Console.WriteLine(CheckCorrectBracket(input));
         }
 
@@ -30,7 +29,7 @@ namespace OOPAdvanceRegex
                 Console.WriteLine($"RegexOne: Index{item.Index},Value{item.Value}");
             }
 
-            
+
             Console.WriteLine(Environment.NewLine);
             Console.ForegroundColor = ConsoleColor.Red;
             foreach (Match item in regexTwo.Matches(input))
@@ -46,7 +45,7 @@ namespace OOPAdvanceRegex
             var groupTwoCount = (from Match two in regexTwo.Matches(input)
                                  select two.Value).Count();
 
-            return groupOneCount == groupTwoCount ;      
+            return groupOneCount == groupTwoCount;
         }
 
         static bool CheckCorrectBracket(string input)
@@ -55,16 +54,15 @@ namespace OOPAdvanceRegex
             //and check if the groups are not equal return false results
             if (CheckGroupValueBYCount(input))
             {
-                string pattern = @"(?<bracket>[(){}<>\[\]])";              
+                string pattern = @"(?<bracket>[(){}<>\[\]])";
                 string temp = string.Empty;
 
-                foreach (Match item in Regex.Matches(input,pattern))
+                foreach (Match item in Regex.Matches(input, pattern))
                 {
                     temp += item;
-                    
 
                 }
-         
+
                 while (temp.Contains("()") || temp.Contains("[]") || temp.Contains("<>") || temp.Contains("{}"))
                 {
                     temp = temp.Replace("()", "");
@@ -73,8 +71,8 @@ namespace OOPAdvanceRegex
                     temp = temp.Replace("{}", "");
 
                 }
-                return temp == string.Empty ;
-                                      
+                return temp == string.Empty;
+
             }
             else
                 return false;
