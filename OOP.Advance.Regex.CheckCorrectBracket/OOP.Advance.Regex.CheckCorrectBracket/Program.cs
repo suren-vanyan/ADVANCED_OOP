@@ -5,7 +5,8 @@ using System.Text.RegularExpressions;
 using System.Collections.Generic;
 
 namespace OOPAdvanceRegex
-{// //Given a string input: return true, if the set of brackets are written in correct form and order.
+{
+    //Given a string input: return true, if the set of brackets are written in correct form and order.
     class Program
     {
         static void Main(string[] args)
@@ -54,23 +55,17 @@ namespace OOPAdvanceRegex
             //and check if the groups are not equal return false results
             if (CheckGroupValueBYCount(input))
             {
-                string pattern = @"(?<bracket>[(){}<>\[\]])";
-                var regex = new Regex(pattern);
+                string pattern = @"(?<bracket>[(){}<>\[\]])";              
                 string temp = string.Empty;
 
-                foreach (Match item in regex.Matches(input))
+                foreach (Match item in Regex.Matches(input,pattern))
                 {
                     temp += item;
+                    
+
                 }
-
-                //IEnumerable<string> result = (from Match m in regex.Matches(input)
-                //              let n = m.Value
-                //              where n.Contains("()")||n.Contains("<>")||
-                //              n.Contains("{}")||n.Contains("[]")
-                //              select n.Replace("()","").Replace("{}","")
-                //              .Replace("[]","").Replace("<>",""));
-
-                while (temp.Contains("()")||temp.Contains("[]")||temp.Contains("<>")||temp.Contains("{}"))
+         
+                while (temp.Contains("()") || temp.Contains("[]") || temp.Contains("<>") || temp.Contains("{}"))
                 {
                     temp = temp.Replace("()", "");
                     temp = temp.Replace("[]", "");
@@ -78,7 +73,6 @@ namespace OOPAdvanceRegex
                     temp = temp.Replace("{}", "");
 
                 }
-
                 return temp == string.Empty ;
                                       
             }
