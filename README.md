@@ -5,7 +5,7 @@
 # :heavy_check_mark: [Programming Input/Output,Working with dates and time](https://github.com/suren-vanyan/ADVANCED_OOP/tree/master/OOP.Advance.System.IO/System.IO.Terminal) 
 ### :small_orange_diamond: [Terminal](https://github.com/suren-vanyan/ADVANCED_OOP/tree/master/OOP.Advance.System.IO/System.IO.Terminal) 
 # :heavy_check_mark: [Work with text. Regex, HTMLAgilityPack](https://github.com/suren-vanyan/ADVANCED_OOP/tree/master/OOP.Advance.Regex) 
-### :small_orange_diamond: [CheckCorrectBracket](https://github.com/suren-vanyan/ADVANCED_OOP/blob/master/OOP.Advance.Regex/Regex.CheckCorrectBracket/OOP.Advance.Regex.CheckCorrectBracket/Program.cs) 
+### -[x] [CheckCorrectBracket](https://github.com/suren-vanyan/ADVANCED_OOP/blob/master/OOP.Advance.Regex/Regex.CheckCorrectBracket/OOP.Advance.Regex.CheckCorrectBracket/Program.cs) 
 ### :small_orange_diamond: [FindAllNumbersInAnyBrackets	](https://github.com/suren-vanyan/ADVANCED_OOP/blob/master/OOP.Advance.Regex/Regex.FindAllNumbersInAnyBrackets/Regex.FindAllNumbersInAnyBrackets/Program.cs) 
 # :heavy_check_mark: [XML, JSON.Configuration files, Serialization](https://github.com/suren-vanyan/ADVANCED_OOP/tree/master/OOP.Advance.System.IO/System.IO.Terminal) 
 
