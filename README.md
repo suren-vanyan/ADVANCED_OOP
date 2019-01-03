@@ -2,7 +2,7 @@
 
 1. [Collections](https://github.com/suren-vanyan/ADVANCED_OOP/tree/master/OOP.Advanced.Collection.MyDictionary/OOP.Advanced.Collection.MyDictionary) 
 1. [Programming Input/Output,Working with dates and time](https://github.com/suren-vanyan/ADVANCED_OOP/tree/master/OOP.Advanced.Collection.MyDictionary/OOP.Advanced.Collection.MyDictionary) 
--[Terminal](https://github.com/suren-vanyan/ADVANCED_OOP/tree/master/OOP.Advance.System.IO/System.IO.Terminal) 
+- [Terminal](https://github.com/suren-vanyan/ADVANCED_OOP/tree/master/OOP.Advance.System.IO/System.IO.Terminal) 
 
 
 
