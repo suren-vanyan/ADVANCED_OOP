@@ -24,7 +24,7 @@ namespace OOP.Advance
 
             foreach (Match group in collection)
             {
-                
+
                 Console.ForegroundColor = (ConsoleColor)(new Random().Next(1, 15));
                 var newMatchCollection = Regex.Matches(group.Value, @"(\d+[.]\d+)");
                 foreach (var item in newMatchCollection)
@@ -34,7 +34,7 @@ namespace OOP.Advance
                 }
             }
 
-          
+
         }
     }
 }
