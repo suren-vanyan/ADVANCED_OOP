@@ -13,8 +13,7 @@ namespace OOP.Advance.System.IO.Terminal
      
     
         static UniversalTerminal()
-        {
-           // Console.WriteLine("Enter Pin Code");       
+        {              
             writer.WriteLine($"{TotalMoney.ToString()} {DateTime.Now}");        
         }
 
