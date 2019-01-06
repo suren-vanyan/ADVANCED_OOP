@@ -2,8 +2,8 @@
 
 ## :heavy_check_mark: [Collections](https://github.com/suren-vanyan/ADVANCED_OOP/tree/master/OOP.Advanced.Collection)
 - [x] [MyDictionary](https://github.com/suren-vanyan/ADVANCED_OOP/tree/master/OOP.Advanced.Collection/OOP.Advanced.Collection.MyDictionary)
-## :heavy_check_mark: [Programming Input/Output,Working with dates and time](https://github.com/suren-vanyan/ADVANCED_OOP/tree/master/OOP.Advance.System.IO/System.IO.Terminal) 
-- [x] [Terminal](https://github.com/suren-vanyan/ADVANCED_OOP/tree/master/OOP.Advance.System.IO/System.IO.Terminal) 
+## :heavy_check_mark: [Programming Input/Output,Working with dates and time](https://github.com/suren-vanyan/ADVANCED_OOP/tree/master/OOP.Advance.System.IO/Terminal) 
+- [x] [Terminal](https://github.com/suren-vanyan/ADVANCED_OOP/tree/master/OOP.Advance.System.IO/Terminal/Terminal) 
 ## :heavy_check_mark: [Work with text. Regex, HTMLAgilityPack](https://github.com/suren-vanyan/ADVANCED_OOP/tree/master/OOP.Advance.Regex) 
 - [x] [CheckCorrectBracket](https://github.com/suren-vanyan/ADVANCED_OOP/blob/master/OOP.Advance.Regex/Regex.CheckCorrectBracket/OOP.Advance.Regex.CheckCorrectBracket/Program.cs) 
 - [x]  [FindAllNumbersInAnyBrackets	](https://github.com/suren-vanyan/ADVANCED_OOP/blob/master/OOP.Advance.Regex/Regex.FindAllNumbersInAnyBrackets/Regex.FindAllNumbersInAnyBrackets/Program.cs) 
