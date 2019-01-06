@@ -7,5 +7,9 @@
 ## :heavy_check_mark: [Work with text. Regex, HTMLAgilityPack](https://github.com/suren-vanyan/ADVANCED_OOP/tree/master/OOP.Advance.Regex) 
 - [x] [CheckCorrectBracket](https://github.com/suren-vanyan/ADVANCED_OOP/blob/master/OOP.Advance.Regex/Regex.CheckCorrectBracket/OOP.Advance.Regex.CheckCorrectBracket/Program.cs) 
 - [x]  [FindAllNumbersInAnyBrackets	](https://github.com/suren-vanyan/ADVANCED_OOP/blob/master/OOP.Advance.Regex/Regex.FindAllNumbersInAnyBrackets/Regex.FindAllNumbersInAnyBrackets/Program.cs) 
-## :heavy_check_mark: [XML, JSON.Configuration files, Serialization](https://github.com/suren-vanyan/ADVANCED_OOP/tree/master/OOP.Advance.System.IO/System.IO.Terminal) 
-
+## :heavy_check_mark: [XML, JSON.Configuration files, Serialization](https://github.com/suren-vanyan/ADVANCED_OOP/tree/master/OOP.Advance.WorkingWithXML/XML_Configuration.AdditionalTasks) 
+- [x]  [XML_Configuration.AdditionalTasks	](https://github.com/suren-vanyan/ADVANCED_OOP/blob/master/OOP.Advance.WorkingWithXML/XML_Configuration.AdditionalTasks/XML_Configuration.AdditionalTasks/Program.cs)
+## :heavy_check_mark: [Attributes](https://github.com/suren-vanyan/ADVANCED_OOP/tree/master/OOP.Advance.WorkingWithXML/XML_Configuration.AdditionalTasks) 
+- [x]  [XML_Configuration.AdditionalTasks	](https://github.com/suren-vanyan/ADVANCED_OOP/blob/master/OOP.Advance.WorkingWithXML/XML_Configuration.AdditionalTasks/XML_Configuration.AdditionalTasks/Program.cs)
+## :heavy_check_mark: [Reflection](https://github.com/suren-vanyan/ADVANCED_OOP/tree/master/OOP.Advance.WorkingWithXML/XML_Configuration.AdditionalTasks) 
+- [x]  [XML_Configuration.AdditionalTasks	](https://github.com/suren-vanyan/ADVANCED_OOP/blob/master/OOP.Advance.WorkingWithXML/XML_Configuration.AdditionalTasks/XML_Configuration.AdditionalTasks/Program.cs)
