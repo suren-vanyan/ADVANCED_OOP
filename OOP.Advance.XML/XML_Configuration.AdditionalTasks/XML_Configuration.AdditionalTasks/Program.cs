@@ -57,7 +57,7 @@ namespace XML_Configuration.AdditionalTasks
         static void Main(string[] args)
         {        
             XmlDocument xmlDoc = new XmlDocument();
-            //CreateXMLFile(xmlDoc);
+            CreateXMLFile(xmlDoc);
             ReadAllInformationXML(xmlDoc);
 
 
