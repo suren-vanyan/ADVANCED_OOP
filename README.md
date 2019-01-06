@@ -9,7 +9,7 @@
 - [x]  [FindAllNumbersInAnyBrackets	](https://github.com/suren-vanyan/ADVANCED_OOP/blob/master/OOP.Advance.Regex/Regex.FindAllNumbersInAnyBrackets/Regex.FindAllNumbersInAnyBrackets/Program.cs) 
 ## :heavy_check_mark: [XML, JSON.Configuration files, Serialization]() 
 - [x]  [XML_Configuration.AdditionalTasks	](https://github.com/suren-vanyan/ADVANCED_OOP/blob/master/OOP.Advance.XML/XML_Configuration.AdditionalTasks/XML_Configuration.AdditionalTasks/Program.cs)
-## :heavy_check_mark: [Attributes](https://github.com/suren-vanyan/ADVANCED_OOP/tree/master/OOP.Advance.WorkingWithXML/XML_Configuration.AdditionalTasks) 
+## :heavy_check_mark: [Attributes](https://github.com/suren-vanyan/ADVANCED_OOP/tree/master/OOP.Advance.Attributes) 
 - [x]  [XML_Configuration.AdditionalTasks	](https://github.com/suren-vanyan/ADVANCED_OOP/blob/master/OOP.Advance.WorkingWithXML/XML_Configuration.AdditionalTasks/XML_Configuration.AdditionalTasks/Program.cs)
 ## :heavy_check_mark: [Reflection](https://github.com/suren-vanyan/ADVANCED_OOP/tree/master/OOP.Advance.WorkingWithXML/XML_Configuration.AdditionalTasks) 
 - [x]  [XML_Configuration.AdditionalTasks	](https://github.com/suren-vanyan/ADVANCED_OOP/blob/master/OOP.Advance.WorkingWithXML/XML_Configuration.AdditionalTasks/XML_Configuration.AdditionalTasks/Program.cs)
