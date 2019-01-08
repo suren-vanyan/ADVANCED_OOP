@@ -32,7 +32,7 @@ namespace WorkingWithReflection
             foreach (ConstructorInfo ctor in type.GetConstructors())
             {
                 Console.Write(type.Name + " (");
-                
+
                 ParameterInfo[] parameters = ctor.GetParameters();
                 for (int i = 0; i < parameters.Length; i++)
                 {
@@ -43,7 +43,7 @@ namespace WorkingWithReflection
 
             }
         }
-        
+
         static void ListAllTypesFromAssambley(Assembly assembly)
         {
             Console.WriteLine(assembly.FullName);
@@ -57,10 +57,10 @@ namespace WorkingWithReflection
 
         static void ListAllMembers(Assembly assembly)
         {
-            
+
             // get all types from assembly MiniVan
             Type type = assembly.GetType("CarLibrary.MiniVan");
-            Console.WriteLine(type.Name+"=>");
+            Console.WriteLine(type.Name + "=>");
             MemberInfo[] members = type.GetMembers();
 
             foreach (MemberInfo element in members)
@@ -70,7 +70,7 @@ namespace WorkingWithReflection
         {
             Type type = Type.GetType("CarLibrary.Car,Car.Library", false, true);
             ListMembersOfCar(type);
-            Console.WriteLine(new string('*',50));
+            Console.WriteLine(new string('*', 50));
 
             SportsCar sportsCar = new SportsCar();
             ListMembersOfSportCar(sportsCar);
