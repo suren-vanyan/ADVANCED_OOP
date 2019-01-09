@@ -9,6 +9,7 @@ namespace JSONSerialization
     [DataContract]
     class Apple:Company
     {
-        public Product[] Products { get; set; }
+        [DataMember]
+        public Product Products { get; set; }
     }
 }

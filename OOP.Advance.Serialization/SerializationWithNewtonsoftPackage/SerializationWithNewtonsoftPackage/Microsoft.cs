@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Runtime.Serialization;
-using System.Text;
+﻿using Newtonsoft.Json;
 
 namespace JSONSerialization
 {
-    [DataContract]
+
     class Microsoft:Company
     {
+        [JsonProperty("Microsoft company products")]
         public Product[] Products { get; set; }
         
     }
