@@ -14,6 +14,7 @@ namespace JSONSerialization
         public string Addres { get; set; }
         public string CITY { get; set; }
         public string Country { get; set; }
+        public string Phone { get; set; }
 
     }
 }

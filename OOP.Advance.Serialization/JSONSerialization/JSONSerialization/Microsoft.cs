@@ -9,5 +9,6 @@ namespace JSONSerialization
     class Microsoft:Company
     {
         public Product[] Products { get; set; }
+        
     }
 }
