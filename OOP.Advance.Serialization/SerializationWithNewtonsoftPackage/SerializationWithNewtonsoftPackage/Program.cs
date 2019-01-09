@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Runtime.Serialization.Json;
 using Newtonsoft.Json;
 
@@ -6,17 +7,40 @@ namespace JSONSerialization
 {
     class Program
     {
-        public static void Serialization(Company[] company)
+        public static void Serialization(Company[] company,string path)
         {
            string jsonFormatter= JsonConvert.SerializeObject(company,Formatting.Indented);
-            File.WriteAllText("company.json", jsonFormatter);
+            using (StreamWriter textWriter=new StreamWriter(path))
+            {
+                textWriter.Write(jsonFormatter);
+            }
+
+          // File.WriteAllText(path, jsonFormatter);
            
         }
 
-        public static void DeSerialization()
+        public static void DeSerialization(string path)
         {
+            //approach 1
+            string[] jsoonCompany=  File.ReadAllLines(path);
+            foreach (var item in jsoonCompany)
+            {
+                Console.WriteLine(item);
+            }
 
+            Console.ReadKey();
+            //does the same as the  version before
+            //approach 2
+            using (StreamReader reader=new StreamReader(path))
+            {
+                string line = string.Empty;
+                while ((line=reader.ReadLine())!=null)
+                {
+                    Console.WriteLine(line);
+                }
+            }
         }
+
         static void Main(string[] args)
         {         
             Apple apple = new Apple()
@@ -56,9 +80,10 @@ namespace JSONSerialization
             };
 
             Company[] company = new Company[] { microsoft, apple };
+            string filePath = "company.json";
+            Serialization(company,filePath);//this method serialize an object
+            DeSerialization(filePath);//this method deserializes the object
 
-            Serialization(company);
-            
         }
     }
 }
