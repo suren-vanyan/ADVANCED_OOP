@@ -55,7 +55,7 @@ namespace JSONSerialization
         }
 
     
-        // DeSerialization approach 2
+        // DeSerialization approach 1
         public static List<Company> DeSerialization(string path)
         {
             string jsoonCompany = File.ReadAllText(path);
