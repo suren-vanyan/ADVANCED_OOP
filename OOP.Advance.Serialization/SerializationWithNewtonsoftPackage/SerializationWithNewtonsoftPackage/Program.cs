@@ -4,15 +4,15 @@ using System.IO;
 using System.Reflection;
 using System.Runtime.Serialization.Json;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace JSONSerialization
 {
     class Program
     {
-        //Serialization approach 2
-        public static void Serialization2(List<Company> companies, string path)
+
+        public static void firstSerializationApproach(List<Company> companies, string path)
         {
-           
             JsonSerializer serializer = new JsonSerializer();
             using (StreamWriter streamWriter = new StreamWriter(path))
             using (JsonTextWriter jsonTextWriter = new JsonTextWriter(streamWriter))
@@ -20,8 +20,8 @@ namespace JSONSerialization
                 serializer.Serialize(jsonTextWriter, companies);
             }
         }
-        // DeSerialization approach 2
-        public static void DeSerialization2(string path)
+
+        public static void firstDeSerializationApproach(string path)
         {
             List<Company> companies = null;
             JsonSerializer serializer = new JsonSerializer();
@@ -30,6 +30,7 @@ namespace JSONSerialization
             {
                 companies = serializer.Deserialize<List<Company>>(jsonReader);
             }
+
             foreach (Company company in companies)
             {
 
@@ -39,80 +40,56 @@ namespace JSONSerialization
 
         }
 
-        //Serialization approach 1
-        public static void Serialization(List<Company> companies, string path)
-        {
-            string jsonFormatter = JsonConvert.SerializeObject(companies, Formatting.Indented,
-            //string jsonFormatter = JsonConvert.SerializeObject(companies, Formatting.Indented);
-            new JsonSerializerSettings { PreserveReferencesHandling = PreserveReferencesHandling.Arrays });
-            File.WriteAllText(path, jsonFormatter);
-      
-            //using (StreamWriter textWriter = new StreamWriter(path))
-            //{
-            //    textWriter.Write(jsonFormatter);
-            //}
 
+        public static void secondSerializationApproach(List<Company> companies, string path)
+        {
+            //string jsonFormatter = JsonConvert.SerializeObject(companies, Formatting.Indented);
+
+            string jsonFormatter = JsonConvert.SerializeObject(companies, Formatting.Indented,
+            new JsonSerializerSettings { PreserveReferencesHandling = PreserveReferencesHandling.Objects });
+            File.WriteAllText(path, jsonFormatter);
         }
 
-    
-        // DeSerialization approach 1
-        public static List<Company> DeSerialization(string path)
+
+        public static void secondDeSerializationApproach(string path)
         {
             string jsoonCompany = File.ReadAllText(path);
             List<Company> companies = null;
+
             // companies = JsonConvert.DeserializeObject<List<Company>>(jsoonCompany);
+
             companies = JsonConvert.DeserializeObject<List<Company>>(jsoonCompany,
             new JsonSerializerSettings { PreserveReferencesHandling = PreserveReferencesHandling.Objects });
-         
+
+          
             foreach (Company company in companies)
             {
-                
                 Print(company);
-                Console.WriteLine(new string('*',50));
+                Console.WriteLine(new string('*', 50));
             }
-   
 
-            //  print as json file contents
-            Console.WriteLine(new string('*', 50));
-            using (StreamReader reader = new StreamReader(path))
-            {
-                string line = string.Empty;
-                while ((line = reader.ReadLine()) != null)
-                {
-                    Console.WriteLine(line);
-                }
-
-            }
-          
-            return companies;
         }
 
-        //կիսատա
-        public static void DeserializeSpecificProperty(string path)
+
+        public static void GetContentFromJson(string path)
         {
             string jsoonCompany = File.ReadAllText(path);
-            List<Company> companies = null;
-            // companies = JsonConvert.DeserializeObject<List<Company>>(jsoonCompany);
-            companies = JsonConvert.DeserializeObject<List<Company>>(jsoonCompany,
-            new JsonSerializerSettings { PreserveReferencesHandling = PreserveReferencesHandling.Objects });
-
-            Type[] typeList = Assembly.GetExecutingAssembly().GetTypes();
-            foreach (var type in typeList)
+            JArray jArray = JArray.Parse(jsoonCompany);
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            foreach (JObject jObject in jArray.Children<JObject>())
             {
-                foreach (var property in type.GetProperties())
+                foreach (JProperty jProperty in jObject.Properties())
                 {
-                    var propertyAttributes = Attribute.GetCustomAttributes(property);
-
-                    
+                    Console.WriteLine(jProperty.Next);  
                 }
             }
-
+           
         }
 
 
         static void Main(string[] args)
         {
-            Apple apple = new Apple()
+            Company apple = new Company()
             {
                 Name = "Apple",
                 WEBSITE = "https://www.apple.com/",
@@ -121,7 +98,7 @@ namespace JSONSerialization
                 CITY = "Cupertino",
                 Phone = "1-800-275-2273",
 
-                Products = new Product[]
+                Products = new List<Product>
                 {
                     new Product{ProductName="iPhone XR",Id=1001,Price=449},
                     new Product{ProductName="iPhone XS",Id=2001,Price=699},
@@ -130,7 +107,7 @@ namespace JSONSerialization
                 }
             };
 
-            Microsoft microsoft = new Microsoft()
+            Company microsoft = new Company()
             {
                 Name = "Microsoft Corporation",
                 WEBSITE = "https://www.microsoft.com/",
@@ -139,7 +116,7 @@ namespace JSONSerialization
                 CITY = "Redmond, Washington",
                 Phone = "(425) 882 - 8080",
 
-                Products = new Product[]
+                Products = new List<Product>
                 {
                     new Product{ProductName="Windows 10 Pro",Id=101,Price=289},
                     new Product{ProductName="Xbox One X",Id=201,Price=499},
@@ -151,17 +128,33 @@ namespace JSONSerialization
             List<Company> companies = new List<Company> { microsoft, apple };
             string filePath = "company.json";
 
-            Serialization(companies, filePath);//this method serialize an object
-            List<Company> newCompanies =  DeSerialization(filePath);//this method deserializes the object
+            //firstSerializationApproach(companies, filePath);
+            //firstDeSerializationApproach(filePath);
 
-            //Serialization2(companies, filePath);
-            // DeSerialization2(filePath);
+             secondSerializationApproach(companies, filePath);
+             secondDeSerializationApproach(filePath);     
+             GetContentFromJson(filePath);
+             PrintAsJson(filePath);
+        }
 
-            DeserializeSpecificProperty(filePath);//կիսատա
+        public static void PrintAsJson(string path)
+        {
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine(new string('*', 50));
+            using (StreamReader reader = new StreamReader(path))
+            {
+                string line = string.Empty;
+                while ((line = reader.ReadLine()) != null)
+                {
+                    Console.WriteLine(line);
+                }
+
+            }
         }
 
         public static void Print(Company company)
         {
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine($"{company.Name}=>\nCompany Address: {company.Address}" +
                 $"\nPhone Number of Company: {company.Phone} ");
             Console.WriteLine("The company has the following products=>");

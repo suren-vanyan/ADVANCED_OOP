@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace JSONSerialization
 {
@@ -23,6 +24,6 @@ namespace JSONSerialization
         [JsonProperty("Phone Number of Company")]
         public string Phone { get; set; }
 
-        public virtual Product[] Products { get; set; }
+        public  List<Product> Products { get; set; }
     }
 }
