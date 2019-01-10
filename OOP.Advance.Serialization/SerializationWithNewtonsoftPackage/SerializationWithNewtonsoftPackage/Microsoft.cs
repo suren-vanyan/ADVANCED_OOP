@@ -5,8 +5,8 @@ namespace JSONSerialization
 
     class Microsoft:Company
     {
-        [JsonProperty("Microsoft company products")]
-        public override Product[] Products { get; set; }
-        
+        //[JsonProperty("Microsoft company products")]
+        //public override Product[] Products { get; set; }
+
     }
 }
