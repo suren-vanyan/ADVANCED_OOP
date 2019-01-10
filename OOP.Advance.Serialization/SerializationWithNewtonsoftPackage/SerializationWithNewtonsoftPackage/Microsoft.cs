@@ -6,7 +6,7 @@ namespace JSONSerialization
     class Microsoft:Company
     {
         [JsonProperty("Microsoft company products")]
-        public Product[] Products { get; set; }
+        public override Product[] Products { get; set; }
         
     }
 }

@@ -23,5 +23,6 @@ namespace JSONSerialization
         [JsonProperty("Phone Number of Company")]
         public string Phone { get; set; }
 
+        public virtual Product[] Products { get; set; }
     }
 }

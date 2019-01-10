@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using System.Runtime.Serialization.Json;
 using Newtonsoft.Json;
 
@@ -7,42 +9,82 @@ namespace JSONSerialization
 {
     class Program
     {
-        public static void Serialization(Company[] company,string path)
+        public static void Serialization(List<Company> companies, string path)
         {
-           string jsonFormatter= JsonConvert.SerializeObject(company,Formatting.Indented);
-            using (StreamWriter textWriter=new StreamWriter(path))
+            string jsonFormatter = JsonConvert.SerializeObject(companies, Formatting.Indented);
+            using (StreamWriter textWriter = new StreamWriter(path))
             {
                 textWriter.Write(jsonFormatter);
             }
 
-          // File.WriteAllText(path, jsonFormatter);
-           
+            File.WriteAllText(path, jsonFormatter);
+
+            //different approach
+            //JsonSerializer serializer = new JsonSerializer();
+            //using (StreamWriter streamWriter = new StreamWriter(path))
+            //using (JsonTextWriter jsonTextWriter = new JsonTextWriter(streamWriter))
+            //{
+            //    serializer.Serialize(jsonTextWriter, companies);
+            //}
+
         }
 
-        public static void DeSerialization(string path)
+        public static List<Company> DeSerialization(string path)
         {
-            //approach 1
-            string[] jsoonCompany=  File.ReadAllLines(path);
-            foreach (var item in jsoonCompany)
-            {
-                Console.WriteLine(item);
-            }
+            string jsoonCompany = File.ReadAllText(path);
+            List<Company> companies = null;
+            
+            companies = JsonConvert.DeserializeObject<List<Company>>(jsoonCompany);
 
-            Console.ReadKey();
-            //does the same as the  version before
-            //approach 2
-            using (StreamReader reader=new StreamReader(path))
+            // different approach
+
+            //JsonSerializer serializer = new JsonSerializer();
+            //using (StreamReader reader = new StreamReader(path))
+            //using (JsonTextReader jsonReader=new JsonTextReader(reader))
+            //{
+            //    companies = serializer.Deserialize<List<Company>>(jsonReader);
+            //}
+
+
+            //using (StreamReader reader = new StreamReader(path))
+            //{
+            //    string line = string.Empty;
+            //    while ((line = reader.ReadLine()) != null)
+            //    {
+            //        Console.WriteLine(line);
+            //    }
+
+            //}
+
+            return companies;
+        }
+        public static void Method(string path)
+        {
+
+            Type[] typeList = Assembly.GetExecutingAssembly().GetTypes();
+            foreach (var type in typeList)
             {
-                string line = string.Empty;
-                while ((line=reader.ReadLine())!=null)
+                foreach (var property in type.GetProperties())
                 {
-                    Console.WriteLine(line);
+                    var propertyAttributes = Attribute.GetCustomAttributes(property);
+
                 }
             }
-        }
 
+
+            using (var stringReader = new StringReader(path))
+            using (var jsonTextReader = new JsonTextReader(stringReader))
+            {
+                while (jsonTextReader.Read())
+                {
+                    if (jsonTextReader.TokenType == JsonToken.PropertyName) ;
+                }
+            }
+
+
+        }
         static void Main(string[] args)
-        {         
+        {
             Apple apple = new Apple()
             {
                 Name = "Apple",
@@ -50,8 +92,8 @@ namespace JSONSerialization
                 Address = "Cupertino CA 95014",
                 Country = "US",
                 CITY = "Cupertino",
-                Phone= "1-800-275-2273",
-               
+                Phone = "1-800-275-2273",
+
                 Products = new Product[]
                 {
                     new Product{ProductName="iPhone XR",Id=1001,Price=449},
@@ -79,10 +121,11 @@ namespace JSONSerialization
                 }
             };
 
-            Company[] company = new Company[] { microsoft, apple };
+            List<Company> companies = new List<Company> { microsoft, apple };
             string filePath = "company.json";
-            Serialization(company,filePath);//this method serialize an object
-            DeSerialization(filePath);//this method deserializes the object
+           // Serialization(companies, filePath);//this method serialize an object
+
+             List<Company> newCompanies =  DeSerialization(filePath);//this method deserializes the object
 
         }
     }

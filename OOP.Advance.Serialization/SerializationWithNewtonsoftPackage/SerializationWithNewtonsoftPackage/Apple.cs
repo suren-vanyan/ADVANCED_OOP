@@ -6,6 +6,6 @@ namespace JSONSerialization
     class Apple:Company
     {
         [JsonProperty("Apple company products")]
-        public Product[] Products { get; set; }
+        public override Product[] Products { get; set; }
     }
 }
