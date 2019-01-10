@@ -13,13 +13,14 @@ namespace JSONSerialization
         [DataMember]
         public string WEBSITE { get; set; }
         [DataMember]
-        public string Addres { get; set; }
+        public string Address { get; set; }
         [DataMember]
         public string CITY { get; set; }
         [DataMember]
         public string Country { get; set; }
         [DataMember]
         public string Phone { get; set; }
-
+        [DataMember]
+        public Product[] Products { get; set; }
     }
 }

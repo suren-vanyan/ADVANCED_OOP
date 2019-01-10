@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
@@ -7,60 +8,63 @@ namespace JSONSerialization
 {
     class Program
     {
-        public static void Serialization(DataContractJsonSerializer serializer,Company[] company)
+        public static void  Serialization(DataContractJsonSerializer serializer,List<Company> companies,string path)
         {
-            using (FileStream fS=new FileStream("company.json",FileMode.OpenOrCreate))
+            string serializCompany = string.Empty;
+            using (FileStream fS=new FileStream(path,FileMode.OpenOrCreate))
             {
-                serializer.WriteObject(fS, company);
+               serializer.WriteObject(fS, companies);
             }
         }
 
-        public static void DeSerialization()
+        public static void DeSerialization(DataContractJsonSerializer serializer, string path)
         {
-
+            using (FileStream fs=new FileStream(path,FileMode.OpenOrCreate))
+            {
+              List<Company> companies=  serializer.ReadObject(fs)as List<Company>;
+            }
         }
         static void Main(string[] args)
-        {         
-            Apple apple = new Apple()
+        {
+            Company nike = new Company()
             {
-                Name = "Apple",
-                WEBSITE = "https://www.apple.com/",
-                Addres = "Cupertino CA 95014",
+                Name = "Nike",
+                WEBSITE = "https://www.nike.com/",
+                Address = "Beaverton, OR 97005",
                 Country = "US",
-                CITY = "Cupertino",
-                Phone= "1-800-275-2273",
-                Products= new Product { ProductName = "iPhone XR", Id = 1001, Price = 449 },
-                //Products = new Product[]
-                //{
-                //    new Product{ProductName="iPhone XR",Id=1001,Price=449},
-                //    new Product{ProductName="iPhone XS",Id=2001,Price=699},
-                //     new Product{ProductName="MacBook Pro",Id=3001,Price=1.299},
-
-                //}
+                CITY = "Oregon",
+                Phone = "1-503-671-6453",
+                Products = new Product[]
+                {
+                    new Product("Nike Air Max 97 QS",10.5,190),
+                    new Product("Nike Air VaporMax",11,170),
+                    
+                }
             };
 
-            Microsoft microsoft = new Microsoft()
+            Company adidas = new Company()
             {
-                Name = "Microsoft Corporation",
-                WEBSITE = "https://www.microsoft.com/",
-                Addres = "Redmond, WA 98052-7329",
-                Country = "US",
-                CITY = "Redmond, Washington",
-                Phone = "425) 882 - 8080",
-                Products= new Product { ProductName = "Windows 10 Pro", Id = 101, Price = 289 },
-                //Products = new Product[]
-                //{
-                //    new Product{ProductName="Windows 10 Pro",Id=101,Price=289},
-                //    new Product{ProductName="Xbox One X",Id=201,Price=499},
-                //     new Product{ProductName="Xbox One S",Id=301,Price=299},
-
-                //}
+                Name = "Adidas",
+                WEBSITE = "https://www.adidas-group.com/en/",
+                Address = "3 Aram Street, Yerevan 0010",
+                Country = "Germany",
+                CITY = "Herzogenaurach,",
+                Phone = "(010) 544707",
+                Products = new Product[]
+                {
+                    new Product("PREDATOR TANGO",13.5,80),
+                    new Product("NEMEZIZ",10,275),
+                  
+                }
             };
 
-            Company[] company = new Company[] { microsoft, apple };
-            DataContractJsonSerializer jsonFormatter = new DataContractJsonSerializer(typeof(Company[]));
+            List<Company> listofCompany = new List<Company> { adidas, nike };
+            DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(List<Company>));
 
-            Serialization(jsonFormatter, company);
+            string path = "company.json";
+            Serialization(serializer, listofCompany, path);
+            DeSerialization(serializer, path);
+
         }
     }
 }

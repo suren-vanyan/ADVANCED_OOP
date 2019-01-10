@@ -11,8 +11,19 @@ namespace JSONSerialization
         [DataMember]
         public string ProductName { get; set; }
         [DataMember]
-        public int Id { get; set; }
+        public double Size { get; set; }
         [DataMember]
         public double Price { get; set; }
+
+        public Product()
+        {
+
+        }
+        public Product(string name,double size,double price)
+        {
+            ProductName = name;
+            Size = size;
+            Price = price;
+        }
     }
 }
