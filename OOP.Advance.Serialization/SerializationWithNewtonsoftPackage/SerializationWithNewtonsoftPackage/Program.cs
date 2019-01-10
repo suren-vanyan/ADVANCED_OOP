@@ -108,6 +108,8 @@ namespace JSONSerialization
             }
 
         }
+
+
         static void Main(string[] args)
         {
             Apple apple = new Apple()

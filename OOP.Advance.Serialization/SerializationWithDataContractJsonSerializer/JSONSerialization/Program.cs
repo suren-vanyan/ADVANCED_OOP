@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
+using Newtonsoft;
+using Newtonsoft.Json.Linq;
 
 namespace JSONSerialization
 {
@@ -23,6 +25,21 @@ namespace JSONSerialization
             {
               List<Company> companies=  serializer.ReadObject(fs)as List<Company>;
             }
+        }
+
+        public static void GetFileContent(string path)
+        {
+            string json = File.ReadAllText(path);
+            JArray jArray = JArray.Parse(json);
+            foreach (JObject obj in jArray.Children<JObject>())
+            {
+                Console.WriteLine(obj.GetType());
+                foreach (JProperty property in obj.Properties())
+                {
+                    Console.WriteLine($"{property.Name}:{property.Value}");
+                }
+            }
+
         }
         static void Main(string[] args)
         {
@@ -62,9 +79,9 @@ namespace JSONSerialization
             DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(List<Company>));
 
             string path = "company.json";
-            Serialization(serializer, listofCompany, path);
-            DeSerialization(serializer, path);
-
+            //Serialization(serializer, listofCompany, path);
+            //DeSerialization(serializer, path);
+            GetFileContent(path);
         }
     }
 }
