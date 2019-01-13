@@ -17,3 +17,6 @@
 ## :heavy_check_mark: [Reflection](https://github.com/suren-vanyan/ADVANCED_OOP/tree/master/OOP.Advance.Reflection/WorkingWithReflection) 
 - [x]  [WorkingWithReflection](https://github.com/suren-vanyan/ADVANCED_OOP/blob/master/OOP.Advance.Reflection/WorkingWithReflection/WorkingWithReflection/Program.cs)
 #### :exclamation: for reflection used Car.Library.dll
+## :heavy_check_mark: [Automatic memory management and garbage collection](https://github.com/suren-vanyan/ADVANCED_OOP/tree/master/OOP.Advance.GC/ResourceMonitoring) 
+- [x]  [ResourceMonitoring](https://github.com/suren-vanyan/ADVANCED_OOP/blob/master/OOP.Advance.GC/ResourceMonitoring/ResourceMonitoring/Program.cs)
+
