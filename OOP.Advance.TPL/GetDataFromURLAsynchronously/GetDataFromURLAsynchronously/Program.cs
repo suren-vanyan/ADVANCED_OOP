@@ -67,7 +67,7 @@ namespace GetDataFromURLAsynchronously
             string url = "https://jsonplaceholder.typicode.com/comments";
             //Task<string> firstTaskResult = new Task<string>(GetDataFromURL, url);
             //firstTaskResult.Start();
-          
+
             //while (!firstTaskResult.IsCompleted)
             //{
             //    Console.ForegroundColor = (ConsoleColor)new Random().Next(1, 15);
@@ -75,16 +75,17 @@ namespace GetDataFromURLAsynchronously
             //    Thread.Sleep(200);
             //    Console.Clear();
             //}
-            
-            ////when the first task is executed another task starts which does the same
+
+
             //if (firstTaskResult.IsCompleted)
             //{
             //    Console.WriteLine($"First Task is Completed:{firstTaskResult.IsCompleted}");
+            //    Console.WriteLine(firstTaskResult.Result);
             //    firstTaskResult.Dispose();
-            //    //Console.WriteLine(firstTaskResult.Result);                       
+
             //}
 
-            
+            ////when the first task is executed another task starts which does the same
             Task<string> secondTaskresult = Task.Factory.StartNew(GetDataFromURL2, url);
             while (!secondTaskresult.IsCompleted)
             {
@@ -97,7 +98,7 @@ namespace GetDataFromURLAsynchronously
             if (secondTaskresult.IsCompleted)
                 Console.WriteLine(secondTaskresult.Result);
 
-              Task.WaitAll( secondTaskresult);
+            Task.WaitAll(secondTaskresult);
 
 
         }
