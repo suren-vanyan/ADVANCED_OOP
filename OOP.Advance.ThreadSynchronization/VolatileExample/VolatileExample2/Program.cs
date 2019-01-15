@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace VolatileExample2
 {
-   
+   //Example From MSDN
     public class Worker
     {    
         public void DoWork()
