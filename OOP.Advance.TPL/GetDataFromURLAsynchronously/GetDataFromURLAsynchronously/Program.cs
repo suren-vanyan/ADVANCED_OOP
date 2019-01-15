@@ -10,30 +10,41 @@ namespace GetDataFromURLAsynchronously
 {
     class Program
     {
-        static string GetDataFromURL(string url)
+        static Task<string> GetDataFromURL(string url)
         {
+
             // Create a request for the URL.   
             WebRequest request = WebRequest.Create(url);
             // If required by the server, set the credentials.  
             request.Credentials = CredentialCache.DefaultCredentials;
             // Get the response.  
-            WebResponse response = request.GetResponse();
+
+            ////Task<WebResponse> task = Task.Factory.FromAsync(
+            ////   request.BeginGetResponse,
+            ////   asyncResult => request.EndGetResponse(asyncResult),
+            ////   (object)null);
+           
+            Task<WebResponse> taskResponse = request.GetResponseAsync();
             // Display the status.  
+            WebResponse response = taskResponse.Result;
             Console.WriteLine(((HttpWebResponse)response).StatusDescription);
-            // Get the stream containing content returned by the server.  
-            Stream dataStream = response.GetResponseStream();
-            // Open the stream using a StreamReader for easy access.  
-            StreamReader reader = new StreamReader(dataStream);
-            // Read the content.  
-            string responseFromServer = reader.ReadToEnd();
-            // Return the content.  
-            return responseFromServer;
+            // Get the stream containing content returned by the server. 
+
+            string responseFromServer = string.Empty;
+            using (Stream dataStream = response.GetResponseStream())
+            using (StreamReader reader = new StreamReader(dataStream))
+            {
+                responseFromServer = reader.ReadToEnd();
+            }
+            
+            return new Task<string>(new Func<string>(()=>responseFromServer));
         }
 
         public static string GetDataFromURL2(string urlAddress)
         {
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(urlAddress);
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+
             string data = string.Empty;
             if (response.StatusCode == HttpStatusCode.OK)
             {
@@ -42,7 +53,7 @@ namespace GetDataFromURLAsynchronously
                 if (response.CharacterSet == null)
                     readStream = new StreamReader(receiveStream);
                 else
-                    readStream = new StreamReader(receiveStream, Encoding.GetEncoding(response.CharacterSet));
+                    readStream = new StreamReader(receiveStream);
                 data = readStream.ReadToEnd();
                 response.Close();
                 readStream.Close();
@@ -53,10 +64,15 @@ namespace GetDataFromURLAsynchronously
 
         static void Main(string[] args)
         {
-            string url = "https://jsonplaceholder.typicode.com/comments";
-            GetDataFromURL(url);
+            string url = "https://jsonplaceholder.typicode.com/comments";         
+            Task<string> taskResult = GetDataFromURL(url);
+            taskResult.Start();
+            Console.WriteLine(taskResult.Result);
+            taskResult.Wait();
+            
+            // Console.WriteLine(GetDataFromURL2(url));
         }
 
-      
+       
     }
 }
