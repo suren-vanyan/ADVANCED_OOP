@@ -10,80 +10,47 @@ namespace MutexExample
     class Program
     {
         static List<string> listOne = new List<string> { "Troelsen", "Hovo", "Tom", "Bil", "Vazgen", "Ashot", "Rob" };
-        static List<string> ListTwo = new List<string> { "Jon", "Ben", "Pol", "Karen", "Artur", "Ashot", "Poxos" };
-        static Mutex tMutex = new Mutex(false, "Toilet");
-        static int x = 0;
+       
+        static Mutex tMutex = new Mutex(false,"Mutex");
+        static Semaphore semaphore;
         static void Main(string[] args)
         {
+            //Thread[] teamOne = new Thread[7];
+            //for (int i = 0; i < teamOne.Length; i++)
+            //{
+            //    teamOne[i] = new Thread(RunningTrackOne);
+            //    teamOne[i].Name = listOne[i].ToString();
+            //    // Thread.Sleep(500);
+            //    teamOne[i].Start();
+            //}
 
-
-            Thread[] teamOne = new Thread[7];
-            Thread[] teamTwo = new Thread[7];
-            for (int i = 0; i < 7; i++)
-            {
-
-                teamOne[i] = new Thread(RunningTrackOne);
-                teamTwo[i] = new Thread(RunningTrackTwo);
-                teamOne[i].Name = listOne[i].ToString();
-                teamTwo[i].Name = ListTwo[i].ToString();
-               
-
-            }
+            //Console.ReadKey();
+            semaphore =new Semaphore(2, 4, "Semafore");
 
             for (int i = 0; i < 7; i++)
             {
-              //  Thread.Sleep(500);
-                teamOne[i].Start();
-                teamTwo[i].Start();
-
+                new Thread(RunningTrackTwo).Start(listOne[i]);
             }
-
             Console.ReadLine();
         }
 
         static void RunningTrackOne()
         {
             tMutex.WaitOne();
-            string threadName = Thread.CurrentThread.Name;
-            if (listOne.Contains(threadName))
-                listOne.Remove(threadName);
-            Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine($"{Thread.CurrentThread.Name} Started");
-            Thread.Sleep(10);
+            Thread.Sleep(200);
             Console.WriteLine($"{Thread.CurrentThread.Name} Finished");
-            if (listOne.Count == 0)
-            {
-
-                Console.WriteLine("First team finished");
-                Console.ResetColor();
-
-            }
-
-            tMutex.ReleaseMutex();
+            tMutex.ReleaseMutex();         
         }
 
-        static void RunningTrackTwo()
+        static void RunningTrackTwo(object name)
         {
-
-            tMutex.WaitOne();
-            string threadName = Thread.CurrentThread.Name;
-            if (ListTwo.Contains(threadName))
-                ListTwo.Remove(threadName);
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine($"{Thread.CurrentThread.Name} Started");
-            Thread.Sleep(10);
-
-            Console.WriteLine($"{Thread.CurrentThread.Name} Finished");
-            if (ListTwo.Count == 0)
-            {
-
-                Console.WriteLine("Second team finished");
-                Console.ResetColor();
-            }
-
-            tMutex.ReleaseMutex();
+            semaphore.WaitOne();
+            Console.WriteLine($"{name} Started");
+            Thread.Sleep(300);
+            Console.WriteLine($"{name} Finished");
+          
+            semaphore.Release();
         }
-
-
     }
 }
