@@ -96,8 +96,9 @@ namespace GetDataFromURLAsynchronously
             {
                 Console.ForegroundColor = (ConsoleColor)new Random().Next(1, 15);
                 Console.WriteLine("\t \t\t Hello");
-                Console.WriteLine("The task of this project is to look for data on and return the result asynchronously" +
-                    "\n\t\t Waiting for an answer");
+                Console.WriteLine("\t \t Greetings dear programmers");
+                Console.WriteLine("\t----The task of this project is to look for data---\n\t ---on and return the result asynchronously---" +
+                    "\n\t\t     Waiting for an answer");
                 Thread.Sleep(200);
                 Console.Clear();
             }
