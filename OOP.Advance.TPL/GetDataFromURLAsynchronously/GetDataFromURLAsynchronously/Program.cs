@@ -13,7 +13,7 @@ namespace GetDataFromURLAsynchronously
     {
         static string GetDataFromURL(object url)
         {
-            Thread.Sleep(3000);
+            Thread.Sleep(6000);
             // Create a request for the URL.   
             WebRequest request = WebRequest.Create(url as string);
             // If required by the server, set the credentials.  
@@ -38,12 +38,12 @@ namespace GetDataFromURLAsynchronously
 
         public static string GetDataFromURL2(object urlAddress)
         {
-            Thread.Sleep(4000);
+            Thread.Sleep(6000);
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(urlAddress as string);
             Task<WebResponse> task = Task.Factory.FromAsync(
-        request.BeginGetResponse,
-        asyncResult => request.EndGetResponse(asyncResult),
-        (object)null);
+            request.BeginGetResponse,
+            asyncResult => request.EndGetResponse(asyncResult),
+            (object)null);
 
             WebResponse webResponse = task.Result;
             HttpWebResponse response = (HttpWebResponse)webResponse;
@@ -65,44 +65,42 @@ namespace GetDataFromURLAsynchronously
         static void Main(string[] args)
         {
             string url = "https://jsonplaceholder.typicode.com/comments";
-            //Task<string> firstTaskResult = new Task<string>(GetDataFromURL, url);
-            //firstTaskResult.Start();
 
-            //while (!firstTaskResult.IsCompleted)
-            //{
-            //    Console.ForegroundColor = (ConsoleColor)new Random().Next(1, 15);
-            //    Console.WriteLine("Waiting for an answer");
-            //    Thread.Sleep(200);
-            //    Console.Clear();
-            //}
-
-
-            //if (firstTaskResult.IsCompleted)
-            //{
-            //    Console.WriteLine($"First Task is Completed:{firstTaskResult.IsCompleted}");
-            //    Console.WriteLine(firstTaskResult.Result);
-            //    firstTaskResult.Dispose();
-
-            //}
-
-            ////when the first task is executed another task starts which does the same
-            Task<string> secondTaskresult = Task.Factory.StartNew(GetDataFromURL2, url);
-            while (!secondTaskresult.IsCompleted)
+            Task<string> firstTaskResult = new Task<string>(GetDataFromURL, url);
+            firstTaskResult.Start();
+            GetDataIsCompleted(firstTaskResult);
+            if (firstTaskResult.IsCompleted)
             {
-                Console.ForegroundColor = (ConsoleColor)new Random().Next(1, 15);
-                Console.WriteLine("Waiting for an answer");
-                Thread.Sleep(200);
-                Console.Clear();
+                Console.WriteLine($"First Task is Completed:{firstTaskResult.IsCompleted}");
+                Console.WriteLine(firstTaskResult.Result);
+                firstTaskResult.Dispose();
+
             }
+
+            firstTaskResult.Wait();
+            //when the first task is executed another task starts which does the same
+            Task<string> secondTaskresult = Task.Factory.StartNew(GetDataFromURL2, url);
+            GetDataIsCompleted(secondTaskresult);
 
             if (secondTaskresult.IsCompleted)
                 Console.WriteLine(secondTaskresult.Result);
 
-            Task.WaitAll(secondTaskresult);
+            Task.WaitAll(firstTaskResult);
 
 
         }
 
-
+        static void GetDataIsCompleted<T>(Task<T> task)
+        {
+            while (!task.IsCompleted)
+            {
+                Console.ForegroundColor = (ConsoleColor)new Random().Next(1, 15);
+                Console.WriteLine("\t \t\t Hello");
+                Console.WriteLine("The task of this project is to look for data on and return the result asynchronously" +
+                    "\n\t\t Waiting for an answer");
+                Thread.Sleep(200);
+                Console.Clear();
+            }
+        }
     }
 }
