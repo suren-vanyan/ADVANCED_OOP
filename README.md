@@ -22,5 +22,5 @@
 
 ## :heavy_check_mark: [Asynchronous programming,Task Parallel Library](https://github.com/suren-vanyan/ADVANCED_OOP/tree/master/OOP.Advance.ThreadSynchronization/VolatileExample) 
 - [x]  [Volatile](https://github.com/suren-vanyan/ADVANCED_OOP/blob/master/OOP.Advance.ThreadSynchronization/VolatileExample/VolatileExample/Program.cs)
--Task
+- Working with :small_blue_diamond: (Task<TResult> Class)
 - [GetDataFromURLAsynchronously](https://github.com/suren-vanyan/ADVANCED_OOP/blob/master/OOP.Advance.TPL/GetDataFromURLAsynchronously/GetDataFromURLAsynchronously/Program.cs)
