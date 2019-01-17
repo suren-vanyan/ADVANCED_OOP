@@ -6,7 +6,7 @@ using System.Collections;
 namespace UserCollections
 {
     // A class that represents a custom collection.
-    public class UserCollection : IEnumerable, IEnumerator//,IDisposable
+    public class UserCollection : IEnumerable, IEnumerator,IDisposable
     {
         readonly Element[] elements = new Element[4];
 
@@ -17,7 +17,6 @@ namespace UserCollections
         }
 
         int position = -1;
-
        
         bool IEnumerator.MoveNext()
         {
@@ -26,14 +25,14 @@ namespace UserCollections
                 position++;
                 return true;
             }
-            else
-            {
-                (this as IEnumerator).Reset();
-                return false;
-            }
-            //return false;
+            //else
+            //{
+               
+            //    (this as IEnumerator).Reset();
+            //    return false;
+            //}
+            return false;
         }
-
        
         object IEnumerator.Current
         {
@@ -46,15 +45,15 @@ namespace UserCollections
             return (IEnumerator)this;
         }
 
-       
+ 
         void IEnumerator.Reset()
         {
             position = -1;
         }
 
-        //public void Dispose()
-        //{
-        //    ((IEnumerator)this).Reset();
-        //}
+        public void Dispose()
+        {
+            ((IEnumerator)this).Reset();
+        }
     }
 }

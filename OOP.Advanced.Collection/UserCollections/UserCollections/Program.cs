@@ -34,6 +34,7 @@ namespace UserCollections
  
             Console.WriteLine("Manual 1");
 
+           
             var enumerator = ((IEnumerable)myCollection).GetEnumerator();
 
             while (enumerator.MoveNext())

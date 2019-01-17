@@ -27,7 +27,7 @@ namespace _02.UserCollectionGeneric
             Console.WriteLine(new string('-', 5));
 
           
-            Console.WriteLine("Curstom");
+            Console.WriteLine("Curstom"); 
             IEnumerator<Element> enumerator = (сollection as IEnumerable<Element>).GetEnumerator();
             while (enumerator.MoveNext())
             {
