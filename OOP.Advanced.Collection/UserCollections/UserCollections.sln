@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "01.UserCollections", "UserC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "02.UserCollectionGeneric", "02.UserCollectionGeneric\02.UserCollectionGeneric.csproj", "{56E78323-77F6-45C3-A2C3-A39AB60255FA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "03.UserCollectionYield", "03.UserCollectionYield\03.UserCollectionYield.csproj", "{EBBFEB3F-E757-46C6-98A9-744547E648B3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{56E78323-77F6-45C3-A2C3-A39AB60255FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{56E78323-77F6-45C3-A2C3-A39AB60255FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{56E78323-77F6-45C3-A2C3-A39AB60255FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EBBFEB3F-E757-46C6-98A9-744547E648B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EBBFEB3F-E757-46C6-98A9-744547E648B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EBBFEB3F-E757-46C6-98A9-744547E648B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EBBFEB3F-E757-46C6-98A9-744547E648B3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
