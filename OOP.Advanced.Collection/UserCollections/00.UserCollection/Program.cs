@@ -19,7 +19,7 @@ namespace _00.UserCollection
 
             People peopleList = new People(peopleArray);
             foreach (Person p in peopleList)
-                Console.WriteLine(p.firstName + " " + p.lastName);
+                Console.WriteLine(p.FirstName + " " + p.LastName);
         }
     }
 }

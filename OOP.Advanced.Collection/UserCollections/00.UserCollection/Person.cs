@@ -12,10 +12,13 @@ namespace _00.UserCollection
         public Person(string fName, string lName)
         {
             this.firstName = fName;
-            this.lastName = lName;
+            this.LastName = lName;
         }
 
-        public string firstName;
-        public string lastName;
+        private string firstName;
+        private string lastName;
+
+        public string FirstName { get => firstName; set => firstName = value; }
+        public string LastName { get => lastName; set => lastName = value; }
     }
 }
