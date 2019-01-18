@@ -26,9 +26,10 @@ namespace GetDataFromUrlUsingAsyncAwait
                 }
 
                 gitHubUser = JsonConvert.DeserializeObject<GitHubUser>(content);
-                return gitHubUser;
+               
             }
-            catch (Exception ex) { throw ex; }
+            catch (Exception ex) { Console.WriteLine(ex.Message); }
+            return gitHubUser;
         }
 
 
@@ -44,17 +45,19 @@ namespace GetDataFromUrlUsingAsyncAwait
                     cToken.ThrowIfCancellationRequested();
                 }
 
-                return  dataResult= await Task.Run(() => GetDataFromURL(url, cToken));
+                  dataResult= await Task.Run(() => GetDataFromURL(url, cToken));
                                   
             }
-            catch (ArgumentNullException arg) { throw arg; }
-            catch (NullReferenceException nr) { throw nr; }
-            catch (AggregateException ag) { throw ag; }
-            catch(Exception e) { throw e; }          
+            catch (ArgumentNullException arg) { Console.WriteLine(arg.Message); }
+            catch (NullReferenceException nr) { Console.WriteLine(nr.Message); }
+            catch (AggregateException ag) { Console.WriteLine(ag.Message); }
+            catch (Exception e) { Console.WriteLine(e.Message); }
+            return dataResult;
         }
 
         public string GetDataFromURL(string url, CancellationToken cToken)
-        {      
+        {
+            string contributorsAsJson = string.Empty;
             try
             {
                 if (cToken.IsCancellationRequested)
@@ -71,16 +74,15 @@ namespace GetDataFromUrlUsingAsyncAwait
                 {
                     using (var sr = new StreamReader(s))
                     {
-                        var contributorsAsJson = sr.ReadToEnd();
-                        return contributorsAsJson;
+                         contributorsAsJson = sr.ReadToEnd();
+                       
                     }
                 }
             }
-            catch (WebException ex)
-            {
-                throw ex;
-            }
+            catch (WebException ex) { Console.WriteLine(ex.Message); }
+            catch (Exception ex) { Console.WriteLine(ex.Message); }
 
+            return contributorsAsJson;
         }
 
         public List<Repository> DeserializeRepoFromUrl(string content, CancellationToken cToken)

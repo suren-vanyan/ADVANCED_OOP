@@ -79,8 +79,8 @@ namespace GetDataFromUrlUsingAsyncAwait
                     case 2: HttpStartUpAsync(Url, cancellationToken);break;
                     default: break;
                 }
-                Thread.Sleep(1000);
-               // cancellationTokenSource.Cancel();
+                Thread.Sleep(500);
+                cancellationTokenSource.Cancel();
             }
             catch (Exception e) { Console.WriteLine(e); }
             Console.ReadLine();
