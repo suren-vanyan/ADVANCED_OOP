@@ -94,8 +94,11 @@ namespace GetDataFromUrlUsingAsyncAwait
 
             try
             {
-                var firstTask = await Task.Run(() => httpBrowser.GetDataUsingHttpAsync(Url, cancellationToken));
-                PrintDataResult(firstTask);
+                object user = await Task.Run(() => httpBrowser.GetDataUsingHttpAsync(Url, cancellationToken));
+                GitHubUser gitUser = user as GitHubUser;
+                if(gitUser!=null)
+                PrintDataResult(gitUser);
+                         
             }
             catch (ArgumentNullException arg) { Console.WriteLine(arg.Message); }
             catch (AggregateException ag)

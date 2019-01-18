@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -30,7 +31,7 @@ namespace GetDataFromUrlUsingAsyncAwait
             return gitHubUser;
         }
 
-        public async Task<GitHubUser> GetDataUsingHttpAsync(string url, CancellationToken cToken)
+        public async Task<object> GetDataUsingHttpAsync(string url, CancellationToken cToken)
         {
             if (cToken.IsCancellationRequested)
             {
@@ -40,28 +41,29 @@ namespace GetDataFromUrlUsingAsyncAwait
             GitHubUser deserializeResult = null;
 
             try
-            {
-                using (HttpClient httpClient = new HttpClient())
+            {              
+                using (var client = new HttpClient())
                 {
-                    httpClient.BaseAddress = new Uri("https://api.github.com/users/suren-vanyan");
-                    httpClient.DefaultRequestHeaders.Add(
-                        "Authorization",
-                        "token 123456789307d8c1d138ddb0848ede028ed30567");
-                    httpClient.DefaultRequestHeaders.Accept.Add(
-                        new MediaTypeWithQualityHeaderValue("application/json"));
-                    
-                    
-                    var response = await httpClient.GetAsync(new Uri(url));
-                    //  response.EnsureSuccessStatusCode();
+                   // client.BaseAddress = new Uri("https://api.github.com");
+                    client.DefaultRequestHeaders.Add("User-Agent", "Anything");
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                    //if (response.IsSuccessStatusCode)
-                    //{
-                    //    string stringResponse = await response.Content.ReadAsStringAsync();
-                    //     deserializeResult = await Task.Run(() => DeserializeDataFromUrl(stringResponse, cToken));
-                    //}
+                    var response = client.GetAsync(url).Result;
+                   // response.EnsureSuccessStatusCode();
+                   // contributors = response.Content.ReadAsStringAsync().Result;
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        string stringResponse = await response.Content.ReadAsStringAsync();
+                        deserializeResult = await Task.Run(() => DeserializeDataFromUrl(stringResponse, cToken));
+                    }
                 }
 
-               
+            }
+            catch (HttpRequestException e)
+            {
+                Console.WriteLine("\nException Caught!");
+                Console.WriteLine("Message :{0} ", e.Message);
             }
             catch (Exception ex)
             {
@@ -72,7 +74,7 @@ namespace GetDataFromUrlUsingAsyncAwait
 
 
 
-        public Repository DeserializeRepoFromUrl(string content, CancellationToken cToken)
+        public List<Repository> DeserializeRepoFromUrl(string content, CancellationToken cToken)
         {
             if (cToken.IsCancellationRequested)
             {
@@ -80,10 +82,10 @@ namespace GetDataFromUrlUsingAsyncAwait
                 cToken.ThrowIfCancellationRequested();
             }
 
-            Repository gitHubUser = null;
+            List<Repository> gitHubUser = null;
             try
             {
-                gitHubUser = JsonConvert.DeserializeObject<Repository>(content);
+                gitHubUser = JsonConvert.DeserializeObject<List<Repository>>(content);
                
             }
             catch (Exception ex) { Console.WriteLine(ex.Message); }
