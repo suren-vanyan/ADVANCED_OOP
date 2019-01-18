@@ -7,49 +7,56 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace GetDataFromUrlUsingAsyncAwait
 {
     class WebBrowser
     {
-        public GitHubUser DeserializeDataFromUrl(object content)
+        public GitHubUser DeserializeDataFromUrl(string content, CancellationToken cToken)
         {
-            string result = content as string;
-            if (result != null)
+            if (cToken.IsCancellationRequested)
             {
-                GitHubUser gitHubUser = null;
-                try
-                {
-                    gitHubUser = JsonConvert.DeserializeObject<GitHubUser>(result);
-                    return gitHubUser;
-                }
-                catch (Exception ex) { throw ex; }
+                Console.WriteLine("Operation aborted by Desrerializing");
+                cToken.ThrowIfCancellationRequested();
             }
-            else
-            {
-                throw new NullReferenceException();
-            }
-         
-        }
 
-        public async Task<GitHubUser> GetDataFromUrlAsync(string Url)
-        {
+            GitHubUser gitHubUser = null;
             try
             {
-                var getDataResult= await Task<string>.Factory.StartNew(GetDataFromURL, Url);
-              GitHubUser deserializeResult=  await Task<GitHubUser>.Factory.StartNew(DeserializeDataFromUrl, getDataResult);
+                gitHubUser = JsonConvert.DeserializeObject<GitHubUser>(content);
+                return gitHubUser;
+            }
+            catch (Exception ex) { throw ex; }
+        }
+
+
+        public async Task<GitHubUser> GetDataFromUrlAsync(string Url, CancellationToken cToken)
+        {
+            if (cToken.IsCancellationRequested)
+            {
+                Console.WriteLine("Operation aborted by token");
+                cToken.ThrowIfCancellationRequested();
+            }
+
+
+            try
+            {
+                var getDataResult = await Task.Run(() => GetDataFromURL(Url, cToken));
+
+                GitHubUser deserializeResult = await Task.Run(() => DeserializeDataFromUrl(getDataResult, cToken));
 
                 return deserializeResult;
 
             }
             catch (ArgumentNullException arg) { throw arg; }
-            catch(NullReferenceException nr) { throw nr; }
+            catch (NullReferenceException nr) { throw nr; }
             catch (AggregateException ag) { throw ag; }
 
         }
 
-        public string GetDataFromURL(object url)
+        public string GetDataFromURL(string url, CancellationToken cToken)
         {
             try
             {
