@@ -8,86 +8,49 @@ using System.Net;
 using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using Newtonsoft.Json;
 
 namespace GetDataFromUrlUsingAsyncAwait
 {
-   
-
     class Program
-    {
-        static string GetDataFromURL(object url)
+    {     
+  
+        static void PrintDataResult(GitHubUser hubUser)
         {
-            var webRequest = WebRequest.Create(url as string) as HttpWebRequest;
-
-            webRequest.ContentType = "application/json";
-            webRequest.UserAgent = "Nothing";
-
-            using (var s = webRequest.GetResponse().GetResponseStream())
-            {
-
-
-                using (var sr = new StreamReader(s))
-                {
-                    var contributorsAsJson = sr.ReadToEnd();
-                    return contributorsAsJson;
-                }
-            }
+            Console.WriteLine($"User Name:{hubUser.name}");
 
         }
 
-        static async Task<string> StartGetDataFromUrl(string Url)
+        static void CompletedTask()
         {
-            return await Task<string>.Factory.StartNew(GetDataFromURL, Url);
 
         }
-
-        static async Task<string> CallGetDataUsingHttp(string url)
+        static void Main(string[] args)
         {
+            
+            WebBrowser webBrowser = new WebBrowser();
+            HttpBrowser httpBrowser = new HttpBrowser();
+            Console.WriteLine("How do you want to download,select client to download data?");
+
+            string Url = "https://api.github.com/users/suren-vanyan";
+            var firstTask = Task.Run(() => webBrowser.GetDataFromUrlAsync(Url));
+            Console.WriteLine(firstTask.Result);
             try
             {
-                using (HttpClient httpClient = new HttpClient())
+                firstTask.Wait();
+                if (firstTask.IsCompleted)
                 {
-                    System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
-                    httpClient.BaseAddress = new Uri(url);
-                    httpClient.DefaultRequestHeaders.Accept.Clear();
-                    httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-                    HttpResponseMessage response = await httpClient.GetAsync(url);
-                    //  response.EnsureSuccessStatusCode();
-                    if (response.IsSuccessStatusCode)
-                    {
-                        string stringResponse = await response.Content.ReadAsStringAsync();
-                        return stringResponse;
-                    }
+                    PrintDataResult(firstTask.Result);
+                   
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                Console.WriteLine("Exception:"+ ex);
             }
-            return null;
+            
         }
 
-        static void Main(string[] args)
-        {
-            string Url = "https://api.github.com/users/vanhakobyan";
-
-            //var firstTask = Task.Run(() => StartGetDataFromUrl(Url));
-            //Console.WriteLine(firstTask.Result);
-            //firstTask.Wait();
-
-            Task<string> secondTask = Task.Run(() => CallGetDataUsingHttp(Url));
-
-            Console.WriteLine(secondTask.Result);
-
-            secondTask.Wait();
-
-            //// Task.WaitAll(firstTask, secondTask);
-            // Console.ReadLine();
-            //try
-
-        }
-
-
+    
     }
 }
