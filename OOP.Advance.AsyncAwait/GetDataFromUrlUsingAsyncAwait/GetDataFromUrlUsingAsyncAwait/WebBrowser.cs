@@ -15,16 +15,16 @@ namespace GetDataFromUrlUsingAsyncAwait
     class WebBrowser
     {
         public GitHubUser DeserializeDataFromUrl(string content, CancellationToken cToken)
-        {
-            if (cToken.IsCancellationRequested)
-            {
-                Console.WriteLine("Operation aborted by Desrerializing");
-                cToken.ThrowIfCancellationRequested();
-            }
-
+        {  
             GitHubUser gitHubUser = null;
             try
             {
+                if (cToken.IsCancellationRequested)
+                {
+                    Console.WriteLine("Operation aborted by Desrerializing");
+                    cToken.ThrowIfCancellationRequested();
+                }
+
                 gitHubUser = JsonConvert.DeserializeObject<GitHubUser>(content);
                 return gitHubUser;
             }
@@ -32,34 +32,39 @@ namespace GetDataFromUrlUsingAsyncAwait
         }
 
 
-        public async Task<GitHubUser> GetDataFromUrlAsync(string Url, CancellationToken cToken)
+        public async  Task<string> GetDataFromUrlAsync(string url, CancellationToken cToken)
         {
-            if (cToken.IsCancellationRequested)
-            {
-                Console.WriteLine("Operation aborted by token");
-                cToken.ThrowIfCancellationRequested();
-            }
-
-
+            string dataResult = string.Empty;
+          
             try
             {
-                var getDataResult = await Task.Run(() => GetDataFromURL(Url, cToken));
+                if (cToken.IsCancellationRequested)
+                {
+                    Console.WriteLine(" Operation aborted in method GetDataFromUrlAsync");
+                    cToken.ThrowIfCancellationRequested();
+                }
 
-                GitHubUser deserializeResult = await Task.Run(() => DeserializeDataFromUrl(getDataResult, cToken));
-
-                return deserializeResult;
-
+                return  dataResult= await Task.Run(() => GetDataFromURL(url, cToken));
+                                  
             }
             catch (ArgumentNullException arg) { throw arg; }
             catch (NullReferenceException nr) { throw nr; }
             catch (AggregateException ag) { throw ag; }
-
+            catch(Exception e) { throw e; }          
         }
 
         public string GetDataFromURL(string url, CancellationToken cToken)
         {
+           
+
             try
             {
+                if (cToken.IsCancellationRequested)
+                {
+                    Console.WriteLine("Operation aborted by token,in method GetDataFromURL");
+                    cToken.ThrowIfCancellationRequested();
+                }
+
                 var webRequest = WebRequest.Create(url as string) as HttpWebRequest;
                 webRequest.ContentType = "application/json";
                 webRequest.UserAgent = "Nothing";
@@ -73,11 +78,28 @@ namespace GetDataFromUrlUsingAsyncAwait
                     }
                 }
             }
-            catch (WebException wb)
+            catch (WebException ex)
             {
-                throw wb;
+                throw ex;
             }
 
+        }
+
+        public List<Repository> DeserializeRepoFromUrl(string content, CancellationToken cToken)
+        {
+            if (cToken.IsCancellationRequested)
+            {
+                Console.WriteLine("Operation aborted by Desrerializing Data using HttpClient");
+                cToken.ThrowIfCancellationRequested();
+            }
+
+            List<Repository> gitHubUser = null;
+            try
+            {
+                gitHubUser = JsonConvert.DeserializeObject<List<Repository>>(content);
+                return gitHubUser;
+            }
+            catch (Exception ex) { throw ex; }
         }
     }
 }

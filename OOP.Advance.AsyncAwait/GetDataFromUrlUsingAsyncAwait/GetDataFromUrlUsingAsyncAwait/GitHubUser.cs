@@ -40,4 +40,9 @@ namespace GetDataFromUrlUsingAsyncAwait
         public DateTime created_at { get; set; }
         public DateTime updated_at { get; set; }
     }
+
+    public class Repository
+    {       
+        public string name { get; set; }
+    }
 }

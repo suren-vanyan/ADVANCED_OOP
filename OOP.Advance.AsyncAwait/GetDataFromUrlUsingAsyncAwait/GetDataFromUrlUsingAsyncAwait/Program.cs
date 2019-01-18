@@ -13,55 +13,108 @@ using Newtonsoft.Json;
 namespace GetDataFromUrlUsingAsyncAwait
 {
     class Program
-    {     
-  
-        static void PrintDataResult(GitHubUser hubUser)
+    {
+
+        static void PrintDataResult(GitHubUser hubUser )
         {
-            Console.WriteLine($"User Name:{hubUser.name}");
-
-        }
-
-        static void CompletedTask()
-        {
-
-        }
-        static void Main(string[] args)
-        {
-            string Url = "https://api.github.com/users/suren-vanyan";
-
-            WebBrowser webBrowser = new WebBrowser();
-            HttpBrowser httpBrowser = new HttpBrowser();
-            Console.WriteLine("How do you want to download,select client to download data?");
-
-         
-
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
-            CancellationToken cancellationToken = cancellationTokenSource.Token;
             
-           
-           
+            Console.WriteLine($"User Name:{hubUser.name}");
+            Console.WriteLine($"Country:{hubUser.location}");
+            Console.WriteLine($"Number Of Public Repo:{hubUser.public_repos}");
+            Console.WriteLine($"Followings: { hubUser.following}");
+            Console.WriteLine($"Followers: { hubUser.followers}");
+            Console.WriteLine(hubUser.repos_url);
+        }
+
+        static void PrintRepo(List<Repository> repositories)
+        {
+            foreach (var repo in repositories)
+            {
+                Console.WriteLine(repo.name);
+            }
+        }
+
+     
+        //  this method creates a task to use WebClient
+        public async static void WebStartUpAsync(string Url, CancellationToken cancellationToken)
+        {
+            WebBrowser webBrowser = new WebBrowser();
+
             try
             {
-                var firstTask = Task.Run(() => webBrowser.GetDataFromUrlAsync(Url, cancellationToken));
-                cancellationTokenSource.Cancel();
-                firstTask.Wait();
-                if (firstTask.IsCompleted)
-                {
-                    PrintDataResult(firstTask.Result);
-                   
-                }
+                var data = await Task.Run(() => webBrowser.GetDataFromUrlAsync(Url, cancellationToken));
+
+                var deserialize = await Task.Run(() => webBrowser.DeserializeDataFromUrl(data, cancellationToken));
+                PrintDataResult(deserialize);
+
+                GitHubUser hubUser = deserialize as GitHubUser;
+                var dataofRepository = await Task.Run(() => webBrowser.GetDataFromUrlAsync(hubUser.repos_url, cancellationToken));
+
+                var deserializeRepository = await Task.Run(() => webBrowser.DeserializeRepoFromUrl(dataofRepository, cancellationToken));
+                Console.WriteLine($"{hubUser.name } has a {hubUser.public_repos} public repositories");
+                PrintRepo(deserializeRepository);
+
             }
-            catch(AggregateException ag)
+            catch (AggregateException ag)
             {
-                Console.WriteLine(ag.Message+$"\nInnerException:{ag.InnerException}");
+                Console.WriteLine(ag.Message + $"\nInnerException:{ag.InnerException}");
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Exception:"+ ex);
+                Console.WriteLine("Exception:" + ex);
             }
-            
         }
 
-    
+     
+        static void Main(string[] args)
+        {
+            string Url = "https://api.github.com/users/suren-vanyan";
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+            CancellationToken cancellationToken = cancellationTokenSource.Token;
+            Console.WriteLine("Input [Web Or Http] to select client to download data ");
+            string str = "Web";//Console.ReadLine();
+            try
+            {
+                
+                switch (str)
+                {
+                    case "Web":
+                        WebStartUpAsync(Url, cancellationToken);
+                        break;
+                    case "Http":
+                        HttpStartUpAsync(Url, cancellationToken);
+                        break;
+                    default:
+                        break;
+                }
+
+                Thread.Sleep(1000);
+               // cancellationTokenSource.Cancel();
+            }
+            catch (Exception e) { Console.WriteLine(e); }
+
+            Console.ReadLine();
+        }
+
+        //  this method creates a task to use WebClient
+        public async static void HttpStartUpAsync(string Url, CancellationToken cancellationToken)
+        {
+            HttpBrowser httpBrowser = new HttpBrowser();
+
+            try
+            {
+                var firstTask = await Task.Run(() => httpBrowser.GetDataUsingHttpAsync(Url, cancellationToken));
+                PrintDataResult(firstTask);
+            }
+            catch (AggregateException ag)
+            {
+                Console.WriteLine(ag.Message + $"\nInnerException:{ag.InnerException}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception:" + ex);
+            }
+        }
+
     }
 }
