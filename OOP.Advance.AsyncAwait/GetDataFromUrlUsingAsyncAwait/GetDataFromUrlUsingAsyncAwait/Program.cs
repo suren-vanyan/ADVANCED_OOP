@@ -16,8 +16,7 @@ namespace GetDataFromUrlUsingAsyncAwait
     {
 
         static void PrintDataResult(GitHubUser hubUser )
-        {
-            
+        {         
             Console.WriteLine($"User Name:{hubUser.name}");
             Console.WriteLine($"Country:{hubUser.location}");
             Console.WriteLine($"Number Of Public Repo:{hubUser.public_repos}");
@@ -55,14 +54,12 @@ namespace GetDataFromUrlUsingAsyncAwait
                 PrintRepo(deserializeRepository);
 
             }
+            catch (ArgumentNullException arg) { Console.WriteLine(arg.Message); }
             catch (AggregateException ag)
             {
                 Console.WriteLine(ag.Message + $"\nInnerException:{ag.InnerException}");
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Exception:" + ex);
-            }
+            catch (Exception ex){Console.WriteLine("Exception:" + ex);}
         }
 
      
@@ -71,31 +68,25 @@ namespace GetDataFromUrlUsingAsyncAwait
             string Url = "https://api.github.com/users/suren-vanyan";
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
             CancellationToken cancellationToken = cancellationTokenSource.Token;
-            Console.WriteLine("Input [Web Or Http] to select client to download data ");
-            string str = "Web";//Console.ReadLine();
+            Console.WriteLine("Input <1> for WebRequest Or <2> for HttpClient  to download data ");
+            bool result = int.TryParse(Console.ReadLine(),out int input);//Console.ReadLine();
+            if (!result) Console.WriteLine("Wrong input Try again");
             try
-            {
-                
-                switch (str)
+            {     
+                switch (input)
                 {
-                    case "Web":
-                        WebStartUpAsync(Url, cancellationToken);
-                        break;
-                    case "Http":
-                        HttpStartUpAsync(Url, cancellationToken);
-                        break;
-                    default:
-                        break;
+                    case 1:WebStartUpAsync(Url, cancellationToken);break;
+                    case 2: HttpStartUpAsync(Url, cancellationToken);break;
+                    default: break;
                 }
-
                 Thread.Sleep(1000);
                // cancellationTokenSource.Cancel();
             }
             catch (Exception e) { Console.WriteLine(e); }
-
             Console.ReadLine();
         }
 
+       
         //  this method creates a task to use WebClient
         public async static void HttpStartUpAsync(string Url, CancellationToken cancellationToken)
         {
@@ -106,14 +97,12 @@ namespace GetDataFromUrlUsingAsyncAwait
                 var firstTask = await Task.Run(() => httpBrowser.GetDataUsingHttpAsync(Url, cancellationToken));
                 PrintDataResult(firstTask);
             }
+            catch (ArgumentNullException arg) { Console.WriteLine(arg.Message); }
             catch (AggregateException ag)
             {
                 Console.WriteLine(ag.Message + $"\nInnerException:{ag.InnerException}");
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Exception:" + ex);
-            }
+            catch (Exception ex) {Console.WriteLine("Exception:" + ex);}
         }
 
     }

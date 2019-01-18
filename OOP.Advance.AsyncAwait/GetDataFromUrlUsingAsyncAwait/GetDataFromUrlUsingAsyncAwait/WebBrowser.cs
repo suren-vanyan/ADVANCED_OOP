@@ -54,9 +54,7 @@ namespace GetDataFromUrlUsingAsyncAwait
         }
 
         public string GetDataFromURL(string url, CancellationToken cToken)
-        {
-           
-
+        {      
             try
             {
                 if (cToken.IsCancellationRequested)

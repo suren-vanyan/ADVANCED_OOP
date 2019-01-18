@@ -24,9 +24,10 @@ namespace GetDataFromUrlUsingAsyncAwait
             try
             {
                 gitHubUser = JsonConvert.DeserializeObject<GitHubUser>(content);
-                return gitHubUser;
+                
             }
-            catch (Exception ex) { throw ex; }
+            catch (Exception ex) { Console.WriteLine(ex.Message); }
+            return gitHubUser;
         }
 
         public async Task<GitHubUser> GetDataUsingHttpAsync(string url, CancellationToken cToken)
@@ -36,29 +37,40 @@ namespace GetDataFromUrlUsingAsyncAwait
                 Console.WriteLine("Operation aborted in Method GetDataUsingHttpAsync while receiving data using HttpClient");
                 cToken.ThrowIfCancellationRequested();
             }
+            GitHubUser deserializeResult = null;
 
             try
             {
                 using (HttpClient httpClient = new HttpClient())
                 {
-                    httpClient.BaseAddress = new Uri(url);
-                    httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-                    HttpResponseMessage response = await httpClient.GetAsync(new Uri(url));
+                    httpClient.BaseAddress = new Uri("https://api.github.com/users/suren-vanyan");
+                    httpClient.DefaultRequestHeaders.Add(
+                        "Authorization",
+                        "token 123456789307d8c1d138ddb0848ede028ed30567");
+                    httpClient.DefaultRequestHeaders.Accept.Add(
+                        new MediaTypeWithQualityHeaderValue("application/json"));
+                    
+                    
+                    var response = await httpClient.GetAsync(new Uri(url));
                     //  response.EnsureSuccessStatusCode();
-                    if (response.IsSuccessStatusCode)
-                    {
-                        string stringResponse = await response.Content.ReadAsStringAsync();
-                        object deserializeResult = await Task.Run(() => DeserializeDataFromUrl(stringResponse, cToken));
-                    }
+
+                    //if (response.IsSuccessStatusCode)
+                    //{
+                    //    string stringResponse = await response.Content.ReadAsStringAsync();
+                    //     deserializeResult = await Task.Run(() => DeserializeDataFromUrl(stringResponse, cToken));
+                    //}
                 }
+
+               
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
-            return null;
+            return deserializeResult;
         }
+
+
 
         public Repository DeserializeRepoFromUrl(string content, CancellationToken cToken)
         {
@@ -72,9 +84,10 @@ namespace GetDataFromUrlUsingAsyncAwait
             try
             {
                 gitHubUser = JsonConvert.DeserializeObject<Repository>(content);
-                return gitHubUser;
+               
             }
-            catch (Exception ex) { throw ex; }
+            catch (Exception ex) { Console.WriteLine(ex.Message); }
+            return gitHubUser;
         }
     }
 }
