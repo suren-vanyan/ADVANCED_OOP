@@ -25,3 +25,6 @@
 - [x]  [ Mutex & Semaphore](https://github.com/suren-vanyan/ADVANCED_OOP/blob/master/OOP.Advance.ThreadSynchronization/WorkingWithMutex/WorkingWithMutex/Program.cs)
 ####  Working with :small_blue_diamond: (Task<TResult> Class)
 - [GetDataFromURLAsynchronously](https://github.com/suren-vanyan/ADVANCED_OOP/blob/master/OOP.Advance.TPL/GetDataFromURLAsynchronously/GetDataFromURLAsynchronously/Program.cs)
+####  Working with :small_blue_diamond: (Async Await) 
+  - [GetDataFromUrlUsingAsyncAwait]( https://github.com/suren-vanyan/ADVANCED_OOP/tree/master/OOP.Advance.AsyncAwait/GetDataFromUrlUsingAsyncAwait/GetDataFromUrlUsingAsyncAwait)
+ 
