@@ -25,15 +25,7 @@ namespace GetDataFromUrlUsingAsyncAwait
             Console.WriteLine(hubUser.repos_url);
         }
 
-        static void PrintRepo(List<Repository> repositories)
-        {
-            foreach (var repo in repositories)
-            {
-                Console.WriteLine(repo.name);
-            }
-        }
-
-     
+    
         //  this method creates a task to use WebClient
         public async static void WebStartUpAsync(string Url, CancellationToken cancellationToken)
         {
@@ -51,8 +43,8 @@ namespace GetDataFromUrlUsingAsyncAwait
 
                 var deserializeRepository = await Task.Run(() => webBrowser.DeserializeRepoFromUrl(dataofRepository, cancellationToken));
                 Console.WriteLine($"{hubUser.name } has a {hubUser.public_repos} public repositories");
-                PrintRepo(deserializeRepository);
-
+                // PrintRepo(deserializeRepository);
+                deserializeRepository.ForEach(x => Console.WriteLine(x.name));
             }
             catch (ArgumentNullException arg) { Console.WriteLine(arg.Message); }
             catch (AggregateException ag)
@@ -80,7 +72,7 @@ namespace GetDataFromUrlUsingAsyncAwait
                     default: break;
                 }
                 Thread.Sleep(500);
-                cancellationTokenSource.Cancel();
+                //cancellationTokenSource.Cancel();
             }
             catch (Exception e) { Console.WriteLine(e); }
             Console.ReadLine();
