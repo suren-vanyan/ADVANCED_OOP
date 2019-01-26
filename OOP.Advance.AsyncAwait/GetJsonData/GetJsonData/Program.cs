@@ -18,17 +18,27 @@ namespace GetJsonData
         }
         public static async void Run(string url, CancellationToken cToken)
         {
-
-            string result = await Task.Run(() => Call.GetDataAsync(url, cToken));
-            List<Company> companies = null;
-
-            await Task.Run(() =>
+            try
             {
+                string result = await Task.Run(() => Call.GetDataAsync(url, cToken));
+                List<Company> companies = null;
 
-                companies = JsonConvert.DeserializeObject<List<Company>>(result);
-            });
+                await Task.Run(() =>
+                {
+                    if (cToken.IsCancellationRequested)
+                    {
+                        Console.WriteLine("Operation Aborted");
+                        return;
+                    }
+                    companies = JsonConvert.DeserializeObject<List<Company>>(result);
+                });
 
-            Print(companies);
+                Print(companies);
+            }
+            catch (ArgumentNullException arg) { Console.WriteLine(arg.Message); }
+            catch (Exception e) { Console.WriteLine(e.Message); }
+           
+           
         }
 
         static void Main(string[] args)
@@ -40,9 +50,10 @@ namespace GetJsonData
             try
             {
                 Run(url, token);
-                 Thread.Sleep(30);
-               // tokenSource.Cancel();
-            }
+                Console.WriteLine("Input 'c' for Abort");              
+                if(Console.ReadKey().KeyChar=='c')
+                tokenSource.Cancel();
+            }           
             catch (Exception e) { Console.WriteLine(e.Message); }
 
             Console.ReadLine();

@@ -12,7 +12,7 @@ namespace GetJsonData
     public static class Call
     {
         public static async Task<string> GetDataAsync(string url, CancellationToken cToken)
-        {
+        {          
             string stringResponse = null;
             try
             {
