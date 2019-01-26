@@ -13,7 +13,7 @@ namespace GetJsonData
     {
         public static async Task<string> GetDataAsync(string url, CancellationToken cToken)
         {
-            string stringResponse = string.Empty;
+            string stringResponse = null;
             try
             {
                 if (cToken.IsCancellationRequested)
@@ -29,7 +29,7 @@ namespace GetJsonData
 
                     var response = client.GetAsync(url).Result;
                     response.EnsureSuccessStatusCode();
-                    stringResponse =await response.Content.ReadAsStringAsync();
+                    stringResponse = await response.Content.ReadAsStringAsync();
                 }
             }
             catch (HttpRequestException e)
