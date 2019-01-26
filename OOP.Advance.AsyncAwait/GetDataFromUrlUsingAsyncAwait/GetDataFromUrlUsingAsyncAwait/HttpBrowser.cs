@@ -49,9 +49,7 @@ namespace GetDataFromUrlUsingAsyncAwait
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
                     var response = client.GetAsync(url).Result;
-                   // response.EnsureSuccessStatusCode();
-                   // contributors = response.Content.ReadAsStringAsync().Result;
-
+                   
                     if (response.IsSuccessStatusCode)
                     {
                         string stringResponse = await response.Content.ReadAsStringAsync();
