@@ -16,6 +16,7 @@ namespace GetJsonData
 
             });
         }
+
         public static async void Run(string url, CancellationToken cToken)
         {
             try
