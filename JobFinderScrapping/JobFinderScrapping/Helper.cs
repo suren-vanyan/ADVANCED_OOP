@@ -2,6 +2,7 @@
 using OpenQA.Selenium.Chrome;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading;
 
@@ -9,10 +10,15 @@ namespace JobFinderScrapping
 {
     public static class Helper
     {
-        public static void ToScroll(ChromeDriver chromeDriver)
+        public static string Scroll(string url)
         {
-           
-            for (int i = 0; i < 80; i++)
+            ChromeOptions chromeOptions = new ChromeOptions();
+            chromeOptions.AddArgument("--disable-images");
+            string directory = @"C:\Users\suren\source\repos\HTMLScrapping\HTMLScrapping\bin\Debug\netcoreapp2.1";
+            ChromeDriver chromeDriver = new ChromeDriver(directory, chromeOptions);
+            chromeDriver.Navigate().GoToUrl(url);
+
+            for (int i = 0; i < 5; i++)
             {
                 try
                 {
@@ -22,54 +28,56 @@ namespace JobFinderScrapping
                 {
                     Program.WriteExceptionInFile(e.Message);
                 }
-                Thread.Sleep(1500);
+                Thread.Sleep(1000);
             }
+            return chromeDriver.PageSource;
         }
 
-        public static void SearchActiveJob(string url)
-        {          
-            HtmlWeb web = new HtmlWeb();
-            HtmlDocument doc = web.Load(url);
-            string job = "//div[@class=\"job-inner job-item-title\"]";
+        public static  List<ActiveJobs> SearchActiveJob(string url)
+        {
+          
+            HtmlDocument doc = new HtmlDocument();
+            doc.LoadHtml(Scroll(url));
 
-            string job2 = "//div[@class='job-inner job-list-deadline']";
-            HtmlNodeCollection jobItemTitle = doc.DocumentNode.SelectNodes(job);
-            HtmlNodeCollection jobԼistDeadline = doc.DocumentNode.SelectNodes(job2);
-            List<ActiveJobs> activeJobs = new List<ActiveJobs>();
+            string path1 = "//div[@class=\"job-inner job-item-title\"]";
+
+            string path2 = "//div[@class='job-inner job-list-deadline']";
+
+            HtmlNodeCollection jobItemTitle = doc.DocumentNode.SelectNodes(path1);
+            HtmlNodeCollection jobԼistDeadline = doc.DocumentNode.SelectNodes(path2);
+
+            List<ActiveJobs> allActiveJobs = new List<ActiveJobs>();
+
             for (int i = 0; i < jobItemTitle.Count; i++)
             {
-                string[] splitText = jobItemTitle[i].InnerText.Split('\n');
-                string[] splitText2 = jobԼistDeadline[i].InnerText.Split('\n');
-                string temp = splitText2[3] + splitText2[4] + splitText2[5];
-                activeJobs.Add(new ActiveJobs { JobName = splitText[1], CompanyName = splitText[2], Data = temp });
+                if (i == 56)
+                {
+                    Console.WriteLine();
+                }
+                    var names = (jobItemTitle[i].InnerText.Replace(" ", "").Split('\n')
+                    .Select(item =>item.Replace("\r",""))).ToArray();  
+                
+                var  data = jobԼistDeadline[i].InnerText.Replace(" ","").Split('\n')
+                            .Select(item=>item.Replace("\r",""))
+                            .Where(item => !string.IsNullOrEmpty(item)).ToArray();
+               
+                    
+                allActiveJobs.Add(new ActiveJobs { JobName = names[1], CompanyName = names[2], Data = string.Join("",data) });
             }
 
-            foreach (var item in activeJobs)
-            {
-                Console.WriteLine($"Company:{item.CompanyName},Data:{item.Data},Job:{item.JobName}");
-            }
-            Console.ReadLine();
+            return allActiveJobs;
         }
 
         public static List<Company> ScrapForStaffAM(string url)
         {
-            //HtmlWeb web = new HtmlWeb();
-           // HtmlDocument doc = web.Load(url);
-
             string className2 = "//div[@class=\"company-action company_inner_right\"]";
 
-            ChromeOptions chromeOptions = new ChromeOptions();
-            chromeOptions.AddArgument("--disable-images");
-            string directory = @"C:\Users\suren\source\repos\HTMLScrapping\HTMLScrapping\bin\Debug\netcoreapp2.1";
-            ChromeDriver chromeDriver = new ChromeDriver(directory,chromeOptions);
-            chromeDriver.Navigate().GoToUrl(url);
-           // ToScroll(chromeDriver);
-
+  
             HtmlDocument doc = new HtmlDocument();
-            doc.LoadHtml(chromeDriver.PageSource);
+            doc.LoadHtml(Scroll(url));
 
             HtmlNodeCollection nodes = doc.DocumentNode.SelectNodes(className2);
-            List<string> compURLList = new List<string>();
+            List<string> companyUrlList = new List<string>();
             try
             {
                 foreach (HtmlNode node in nodes)
@@ -77,7 +85,7 @@ namespace JobFinderScrapping
                     string href = node.InnerHtml;
                     var splited = href.Split(' ')[1];
                     var urlcomp = splited.Substring(6, splited.Length - 7);
-                    compURLList.Add(@"https://staff.am" + urlcomp);
+                    companyUrlList.Add(@"https://staff.am" + urlcomp);
                 }
             }
             catch (Exception e)
@@ -85,15 +93,11 @@ namespace JobFinderScrapping
                 Program.WriteExceptionInFile(e);
             }
             
-
             List<Company> allCompanies = new List<Company>();
-            foreach (var compURL in compURLList)
-            {
-                chromeDriver.Navigate().GoToUrl(compURL);
-                // ToScroll(chromeDriver);
-
+            foreach (var companyUrl in companyUrlList)
+            {              
                 HtmlDocument htmlDoc = new HtmlDocument();
-                htmlDoc.LoadHtml(chromeDriver.PageSource);
+                htmlDoc.LoadHtml(Scroll(companyUrl));
 
                 string companyProperties = "//p[@class=\"professional-skills-description\"]";
                 HtmlNodeCollection htmlNodes = htmlDoc.DocumentNode.SelectNodes(companyProperties);
