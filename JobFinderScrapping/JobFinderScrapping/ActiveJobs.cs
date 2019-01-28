@@ -4,12 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Get_Companies_From_WebSite
+namespace JobFinderScrapping
 {
-    public struct ActiveJobs
+    public class ActiveJobs
     {
         public string JobName { get; set; }
-        public string Data { get; set; }
-        public string Location { get; set; }
+        public string Data { get; set; }       
+        public string CompanyName { get; set; }
+
     }
 }

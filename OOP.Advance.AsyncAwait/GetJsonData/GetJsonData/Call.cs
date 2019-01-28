@@ -29,6 +29,7 @@ namespace GetJsonData
 
                     var response = client.GetAsync(url).Result;
                     response.EnsureSuccessStatusCode();
+                    Console.WriteLine();
                     stringResponse = await response.Content.ReadAsStringAsync();
                 }
             }

@@ -20,7 +20,7 @@ namespace GetJsonData
         public static async void Run(string url, CancellationToken cToken)
         {
             try
-            {
+            {              
                 string result = await Task.Run(() => Call.GetDataAsync(url, cToken));
                 List<Company> companies = null;
 

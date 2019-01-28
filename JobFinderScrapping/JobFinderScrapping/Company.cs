@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Get_Companies_From_WebSite
+namespace JobFinderScrapping
 {
     public class Company
     {
@@ -28,6 +28,10 @@ namespace Get_Companies_From_WebSite
             Adress = adress;
         }
 
+        public Company()
+        {
+
+        }
         public void DescribeYourself()
         {
             Console.WriteLine(Name);
@@ -36,7 +40,8 @@ namespace Get_Companies_From_WebSite
             Console.WriteLine(NumbOfEmployees);
             Console.WriteLine(DataOfFoundation);
             Console.WriteLine(WebSite);
-            Console.WriteLine(Adress);
+            Console.WriteLine(Adress+"\n");
+            Console.WriteLine(AboutCompany);
         }
     }
 }
