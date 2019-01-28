@@ -18,7 +18,7 @@ namespace JobFinderScrapping
             ChromeDriver chromeDriver = new ChromeDriver(directory, chromeOptions);
             chromeDriver.Navigate().GoToUrl(url);
 
-            for (int i = 0; i < 50; i++)
+            for (int i = 0; i < 20; i++)
             {
                 try
                 {
@@ -105,7 +105,8 @@ namespace JobFinderScrapping
 
                     string companyProp = "//div[@class='col-lg-8 col-md-8 about-text']";
                     HtmlNodeCollection htmlNodesAboutComp = htmlDoc.DocumentNode.SelectNodes(companyProp);
-                    string textAboutComp = htmlNodesAboutComp[0].InnerText.Replace("\n", "");
+                    var textAboutComp =htmlNodesAboutComp.Select(i=>i.InnerText.Replace("\n", "")).ToList(); 
+                   
 
                     string companyName = "//h1[@class=\"text-left\"]";
                     HtmlNodeCollection htmlNodeOfName = htmlDoc.DocumentNode.SelectNodes(companyName);
@@ -125,7 +126,7 @@ namespace JobFinderScrapping
 
                     List<string> nodeofName = htmlNodeOfName.Select(item => item.InnerText).ToList();
                     if (nodeofName != null) company.Name = nodeofName[0];
-                    company.AboutCompany = textAboutComp;
+                    if (textAboutComp != null) company.AboutCompany = textAboutComp[0];
 
                     //company.Industry = htmlNodes[0].InnerText;
                     //company.Type = htmlNodes[1].InnerText;
