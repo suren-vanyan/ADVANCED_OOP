@@ -14,11 +14,11 @@ namespace JobFinderScrapping
         {
             ChromeOptions chromeOptions = new ChromeOptions();
             chromeOptions.AddArgument("--disable-images");
-            string directory = @"C:\Users\suren\source\repos\HTMLScrapping\HTMLScrapping\bin\Debug\netcoreapp2.1";
+            string directory = @"D:\GitHub_Projects\ADVANCE_OOP\JobFinderScrapping\JobFinderScrapping\bin\Debug\netcoreapp2.1";
             ChromeDriver chromeDriver = new ChromeDriver(directory, chromeOptions);
             chromeDriver.Navigate().GoToUrl(url);
 
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 50; i++)
             {
                 try
                 {
@@ -26,16 +26,16 @@ namespace JobFinderScrapping
                 }
                 catch (Exception e)
                 {
-                    Program.WriteExceptionInFile(e.Message);
+                    Program.WriteExceptionInFile(e);
                 }
                 Thread.Sleep(1000);
             }
             return chromeDriver.PageSource;
         }
 
-        public static  List<ActiveJobs> SearchActiveJob(string url)
+        public static List<ActiveJobs> SearchActiveJob(string url)
         {
-          
+
             HtmlDocument doc = new HtmlDocument();
             doc.LoadHtml(Scroll(url));
 
@@ -50,19 +50,16 @@ namespace JobFinderScrapping
 
             for (int i = 0; i < jobItemTitle.Count; i++)
             {
-                if (i == 56)
-                {
-                    Console.WriteLine();
-                }
-                    var names = (jobItemTitle[i].InnerText.Replace(" ", "").Split('\n')
-                    .Select(item =>item.Replace("\r",""))).ToArray();  
-                
-                var  data = jobԼistDeadline[i].InnerText.Replace(" ","").Split('\n')
-                            .Select(item=>item.Replace("\r",""))
+
+                var names = (jobItemTitle[i].InnerText.Replace(" ", "").Split('\n')
+                .Select(item => item.Replace("\r", ""))).ToArray();
+
+                var data = jobԼistDeadline[i].InnerText.Replace(" ", "").Split('\n')
+                            .Select(item => item.Replace("\r", ""))
                             .Where(item => !string.IsNullOrEmpty(item)).ToArray();
-               
-                    
-                allActiveJobs.Add(new ActiveJobs { JobName = names[1], CompanyName = names[2], Data = string.Join("",data) });
+
+
+                allActiveJobs.Add(new ActiveJobs { JobName = names[1], CompanyName = names[2], Data = string.Join("", data) });
             }
 
             return allActiveJobs;
@@ -72,7 +69,7 @@ namespace JobFinderScrapping
         {
             string className2 = "//div[@class=\"company-action company_inner_right\"]";
 
-  
+            HtmlWeb htmlWeb = new HtmlWeb();
             HtmlDocument doc = new HtmlDocument();
             doc.LoadHtml(Scroll(url));
 
@@ -92,42 +89,56 @@ namespace JobFinderScrapping
             {
                 Program.WriteExceptionInFile(e);
             }
-            
+
             List<Company> allCompanies = new List<Company>();
             foreach (var companyUrl in companyUrlList)
-            {              
-                HtmlDocument htmlDoc = new HtmlDocument();
-                htmlDoc.LoadHtml(Scroll(companyUrl));
-
-                string companyProperties = "//p[@class=\"professional-skills-description\"]";
-                HtmlNodeCollection htmlNodes = htmlDoc.DocumentNode.SelectNodes(companyProperties);
-
-                string companyProp = "//div[@class='col-lg-8 col-md-8 about-text']";
-                HtmlNodeCollection htmlNodesAboutComp = htmlDoc.DocumentNode.SelectNodes(companyProp);
-                string textAboutComp = htmlNodesAboutComp[0].InnerText.Replace("\n", "");
-
-                string companyName = "//h1[@class=\"text-left\"]";
-                HtmlNodeCollection htmlNodeOfName = htmlDoc.DocumentNode.SelectNodes(companyName);
-
+            {
                 Company company = new Company();
 
-               
                 try
                 {
-                    company.Name = htmlNodeOfName[0].InnerText;
-                    company.Industry = htmlNodes[0].InnerText;
-                    company.Type = htmlNodes[1].InnerText;
-                    company.NumbOfEmployees = htmlNodes[2].InnerText;
-                    company.DataOfFoundation = htmlNodes[3].InnerText;
-                    company.WebSite = htmlNodes[4].InnerText;
-                    company.Adress = htmlNodes[5].InnerText;
+                  
+                    HtmlDocument htmlDoc = htmlWeb.Load(companyUrl);
+                    string companyProperties = "//p[@class=\"professional-skills-description\"]";
+                    // string companyProperties = "//div[@class='professional-skills-description']";                 
+                    HtmlNodeCollection htmlNodes = htmlDoc.DocumentNode.SelectNodes(companyProperties);
+
+                    string companyProp = "//div[@class='col-lg-8 col-md-8 about-text']";
+                    HtmlNodeCollection htmlNodesAboutComp = htmlDoc.DocumentNode.SelectNodes(companyProp);
+                    string textAboutComp = htmlNodesAboutComp[0].InnerText.Replace("\n", "");
+
+                    string companyName = "//h1[@class=\"text-left\"]";
+                    HtmlNodeCollection htmlNodeOfName = htmlDoc.DocumentNode.SelectNodes(companyName);
+
+
+                    List<string> nodeInnerText = htmlNodes.Select(node => node.InnerText.Replace("\n", "").ToLower()).ToList();
+                    foreach (var innerText in nodeInnerText)
+                    {
+                        if (innerText.Contains("industry")) company.Industry = innerText;
+                        if (innerText.Contains("type")) company.Type = innerText;
+                        if (innerText.Contains("number of employees")) company.NumbOfEmployees = innerText;
+                        if (innerText.Contains("foundation")) company.DataOfFoundation = innerText;
+                        if (innerText.Contains("website")) company.WebSite = innerText;
+                        if (innerText.Contains("address")) company.Adress = innerText;
+
+                    }
+
+                    List<string> nodeofName = htmlNodeOfName.Select(item => item.InnerText).ToList();
+                    if (nodeofName != null) company.Name = nodeofName[0];
                     company.AboutCompany = textAboutComp;
+
+                    //company.Industry = htmlNodes[0].InnerText;
+                    //company.Type = htmlNodes[1].InnerText;
+                    //company.NumbOfEmployees = htmlNodes[2].InnerText;
+                    //company.DataOfFoundation = htmlNodes[3].InnerText;
+                    //company.WebSite = htmlNodes[4].InnerText;
+                    //company.Adress = htmlNodes[5].InnerText;
+                    //company.Name = htmlNodeOfName[0].InnerText;
+
                 }
-                catch (ArgumentException arg)
-                {
-                    Program.WriteExceptionInFile(arg);
-                }
-           
+                catch (ArgumentException arg) { Program.WriteExceptionInFile(arg); }
+                catch (Exception e) { Program.WriteExceptionInFile(e); }
+
                 allCompanies.Add(company);
                 company.DescribeYourself();
                 Thread.Sleep(4000);
