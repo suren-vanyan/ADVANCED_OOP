@@ -33,9 +33,17 @@ namespace JobFinderScrapping
 
         public static List<Company> ScrapForStaffAM(string url)
         {
-            HtmlWeb web = new HtmlWeb();
-            // ToScroll(url);
-            HtmlDocument doc = web.Load(url);
+            ChromeOptions chromeOptions = new ChromeOptions();
+            chromeOptions.AddArgument("--disable-images");
+            string directory = @"C:\Users\suren\source\repos\HTMLScrapping\HTMLScrapping\bin\Debug\netcoreapp2.1";
+            ChromeDriver chromeDriver = new ChromeDriver(directory, chromeOptions);
+            chromeDriver.Navigate().GoToUrl(url);
+            // ToScroll(chromeDriver);
+
+            HtmlDocument doc = new HtmlDocument();
+            doc.LoadHtml(chromeDriver.PageSource);
+
+                  
             string className = "//div[@class=\"company-action company_inner_right\"]";
             HtmlNodeCollection nodes = doc.DocumentNode.SelectNodes(className);
             List<string> compURLList = new List<string>();  // Create company url list
@@ -51,7 +59,13 @@ namespace JobFinderScrapping
             { // try-i mejinna ,indz tvuma aveli lava senc nayes qan es bacatrem))))))
                 foreach (var compURL in compURLList)
                 {
-                    HtmlDocument htmlDoc = web.Load(compURL);
+                    
+                    chromeDriver.Navigate().GoToUrl(compURL);
+                    // ToScroll(chromeDriver);
+
+                    HtmlDocument htmlDoc = new HtmlDocument();
+                    htmlDoc.LoadHtml(chromeDriver.PageSource);
+
                     string companyProperties = "//p[@class=\"professional-skills-description\"]";
                     HtmlNodeCollection htmlNodes = htmlDoc.DocumentNode.SelectNodes(companyProperties); // All the property values in a collection 
                     List<string> props = new List<string>(6) { "Industry:", "Type:", "Number of Employees:", "Data of foundation", "Website:", "Adress:" };
