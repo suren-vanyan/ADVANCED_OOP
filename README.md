@@ -1,7 +1,7 @@
 # Advanced C# Programming Course  <img src="https://www.onlinebooksreview.com/uploads/blog_images/2018/01/27_c-sharp-logo-filled.png" align="right" width="150px" height="150px" /> 
 
 ## :heavy_check_mark: [Scrapping](https://github.com/suren-vanyan/ADVANCED_OOP/tree/master/Staff.AmScrapping)
-- [x] [MyDictionary](https://github.com/suren-vanyan/ADVANCED_OOP/tree/master/Staff.AmScrapping)
+- [x] [Staff.AmScrapping](https://github.com/suren-vanyan/ADVANCED_OOP/tree/master/Staff.AmScrapping)
 
 ## :heavy_check_mark: [Collections](https://github.com/suren-vanyan/ADVANCED_OOP/tree/master/OOP.Advanced.Collection)
 - [x] [MyDictionary](https://github.com/suren-vanyan/ADVANCED_OOP/tree/master/OOP.Advanced.Collection/OOP.Advanced.Collection.MyDictionary)
