@@ -14,24 +14,38 @@ namespace JobFinderScrapping
         public string NumbOfEmployees { get; set; }
         public string DataOfFoundation { get; set; }
         public string AboutCompany { get; set; }
-        public ActiveJobs Jobs { get; set; }
         public string WebSite { get; set; }
         public string Adress { get; set; }
+        public List<ActiveJobs> ActiveJobs { get; set; }= new List<ActiveJobs>();
+       
 
-        public Company(string industry, string type, string numbOfEmployees, string dataOfFoundation, string webSite, string adress)
+        public Company(string name, string industry, string type, string numbOfEmployees,
+            string dataOfFoundation, string webSite, string adress, string aboutCompany)
         {
+            Name = name;
             Industry = industry;
             Type = type;
             NumbOfEmployees = numbOfEmployees;
             DataOfFoundation = dataOfFoundation;
             WebSite = webSite;
             Adress = adress;
+            AboutCompany = aboutCompany;
+            ActiveJobs = new List<ActiveJobs>();
+
         }
 
         public Company()
         {
 
         }
+
+        public override string ToString()
+        {
+            return $"{Name}\n{Industry}\n{Type}\n{NumbOfEmployees}\n{DataOfFoundation}\n{WebSite}\n{Adress}" +
+                $"\n\n{AboutCompany}";
+        }
+
+
         public void DescribeYourself()
         {
             Console.WriteLine(Name);
@@ -40,7 +54,7 @@ namespace JobFinderScrapping
             Console.WriteLine(NumbOfEmployees);
             Console.WriteLine(DataOfFoundation);
             Console.WriteLine(WebSite);
-            Console.WriteLine(Adress+"\n");
+            Console.WriteLine(Adress + "\n");
             Console.WriteLine(AboutCompany);
         }
     }

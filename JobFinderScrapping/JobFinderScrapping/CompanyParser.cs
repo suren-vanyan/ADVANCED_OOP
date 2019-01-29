@@ -8,7 +8,7 @@ using System.Threading;
 
 namespace JobFinderScrapping
 {
-    public static class Helper
+    public static class CompanyParser
     {
         public static string Scroll(string url)
         {
@@ -18,7 +18,7 @@ namespace JobFinderScrapping
             ChromeDriver chromeDriver = new ChromeDriver(directory, chromeOptions);
             chromeDriver.Navigate().GoToUrl(url);
 
-            for (int i = 0; i < 20; i++)
+            for (int i = 0; i < 1; i++)
             {
                 try
                 {
@@ -33,24 +33,23 @@ namespace JobFinderScrapping
             return chromeDriver.PageSource;
         }
 
-        public static List<ActiveJobs> SearchActiveJob(string url)
+        public static List<ActiveJobs> SearchActiveJobForCompany(HtmlDocument doc)
         {
 
-            HtmlDocument doc = new HtmlDocument();
-            doc.LoadHtml(Scroll(url));
+            string pathForNames = "//div[@class=\"job-inner job-item-title\"]";
 
-            string path1 = "//div[@class=\"job-inner job-item-title\"]";
-
-            string path2 = "//div[@class='job-inner job-list-deadline']";
-
-            HtmlNodeCollection jobItemTitle = doc.DocumentNode.SelectNodes(path1);
-            HtmlNodeCollection jobԼistDeadline = doc.DocumentNode.SelectNodes(path2);
+            string pathForData = "//div[@class='job-inner job-list-deadline']";
+            string pathForLoacation = "//div[@class='job-inner job-location']"; 
+            
+            HtmlNodeCollection jobItemTitle = doc.DocumentNode.SelectNodes(pathForNames);
+            HtmlNodeCollection jobԼistDeadline = doc.DocumentNode.SelectNodes(pathForData);
+            HtmlNodeCollection jobLocation = doc.DocumentNode.SelectNodes(pathForLoacation);
 
             List<ActiveJobs> allActiveJobs = new List<ActiveJobs>();
 
             for (int i = 0; i < jobItemTitle.Count; i++)
             {
-
+                var location = jobLocation[i].InnerText.Replace(" ", "").Replace("\n", "");
                 var names = (jobItemTitle[i].InnerText.Replace(" ", "").Split('\n')
                 .Select(item => item.Replace("\r", ""))).ToArray();
 
@@ -59,13 +58,13 @@ namespace JobFinderScrapping
                             .Where(item => !string.IsNullOrEmpty(item)).ToArray();
 
 
-                allActiveJobs.Add(new ActiveJobs { JobName = names[1], CompanyName = names[2], Data = string.Join("", data) });
+                allActiveJobs.Add(new ActiveJobs { CompanyJobName = names[1], CompanyName = names[2], JobData = string.Join(" ", data), Location =location });
             }
 
             return allActiveJobs;
         }
 
-        public static List<Company> ScrapForStaffAM(string url)
+        public static List<Company> SearchAllCompanies(string url)
         {
             string className2 = "//div[@class=\"company-action company_inner_right\"]";
 
@@ -99,6 +98,9 @@ namespace JobFinderScrapping
                 {
                   
                     HtmlDocument htmlDoc = htmlWeb.Load(companyUrl);
+
+                 company.ActiveJobs=  SearchActiveJobForCompany(htmlDoc);
+
                     string companyProperties = "//p[@class=\"professional-skills-description\"]";
                     // string companyProperties = "//div[@class='professional-skills-description']";                 
                     HtmlNodeCollection htmlNodes = htmlDoc.DocumentNode.SelectNodes(companyProperties);
@@ -128,13 +130,8 @@ namespace JobFinderScrapping
                     if (nodeofName != null) company.Name = nodeofName[0];
                     if (textAboutComp != null) company.AboutCompany = textAboutComp[0];
 
-                    //company.Industry = htmlNodes[0].InnerText;
-                    //company.Type = htmlNodes[1].InnerText;
-                    //company.NumbOfEmployees = htmlNodes[2].InnerText;
-                    //company.DataOfFoundation = htmlNodes[3].InnerText;
-                    //company.WebSite = htmlNodes[4].InnerText;
-                    //company.Adress = htmlNodes[5].InnerText;
-                    //company.Name = htmlNodeOfName[0].InnerText;
+                  
+
 
                 }
                 catch (ArgumentException arg) { Program.WriteExceptionInFile(arg); }
@@ -142,6 +139,7 @@ namespace JobFinderScrapping
 
                 allCompanies.Add(company);
                 company.DescribeYourself();
+                Console.WriteLine(company);
                 Thread.Sleep(4000);
                 Console.Clear();
 

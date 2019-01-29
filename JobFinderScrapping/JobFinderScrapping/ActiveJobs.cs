@@ -8,9 +8,14 @@ namespace JobFinderScrapping
 {
     public class ActiveJobs
     {
-        public string JobName { get; set; }
-        public string Data { get; set; }       
+        public string CompanyJobName { get; set; }
+        public string JobData { get; set; }       
         public string CompanyName { get; set; }
+        public string Location { get; set; }
 
+        public override string ToString()
+        {
+            return $"{CompanyJobName}\n{JobData}\n{Location}";
+        }
     }
 }
