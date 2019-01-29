@@ -15,7 +15,7 @@ namespace JobFinderScrapping
 
         public override string ToString()
         {
-            return $"{CompanyJobName}\n{JobData}\n{Location}";
+            return $"{CompanyName}\n{CompanyJobName}\n{JobData}\n{Location}";
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using HtmlAgilityPack;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using System;
 using System.Collections.Generic;
@@ -18,18 +19,24 @@ namespace JobFinderScrapping
             ChromeDriver chromeDriver = new ChromeDriver(directory, chromeOptions);
             chromeDriver.Navigate().GoToUrl(url);
 
-            for (int i = 0; i < 1; i++)
+            long scrollHeight = 0;
+
+            do
             {
-                try
+                IJavaScriptExecutor js = chromeDriver;
+                var newScrollHeight = (long)js.ExecuteScript("window.scrollTo(0, document.body.scrollHeight); return document.body.scrollHeight;");
+
+                if (newScrollHeight == scrollHeight)
                 {
-                    chromeDriver.ExecuteScript($"window.scrollBy(0,1750);");
+                    break;
                 }
-                catch (Exception e)
+                else
                 {
-                    Program.WriteExceptionInFile(e);
+                    scrollHeight = newScrollHeight;
+                    Thread.Sleep(2000);
                 }
-                Thread.Sleep(1000);
-            }
+            } while (true);
+
             return chromeDriver.PageSource;
         }
 
@@ -71,7 +78,7 @@ namespace JobFinderScrapping
             HtmlWeb htmlWeb = new HtmlWeb();
             HtmlDocument doc = new HtmlDocument();
             doc.LoadHtml(Scroll(url));
-
+          
             HtmlNodeCollection nodes = doc.DocumentNode.SelectNodes(className2);
             List<string> companyUrlList = new List<string>();
             try
@@ -136,14 +143,16 @@ namespace JobFinderScrapping
                 }
                 catch (ArgumentException arg) { Program.WriteExceptionInFile(arg); }
                 catch (Exception e) { Program.WriteExceptionInFile(e); }
-
-                allCompanies.Add(company);
-                company.DescribeYourself();
+                
+                allCompanies.Add(company);              
                 Console.WriteLine(company);
-                Thread.Sleep(4000);
+                Console.WriteLine("Active Jobs=>");
+                company.ActiveJobs.ForEach(item => Console.WriteLine(item));
+                Thread.Sleep(8000);
                 Console.Clear();
 
             }
+
             return allCompanies;
         }
     }

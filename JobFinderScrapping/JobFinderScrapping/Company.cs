@@ -46,16 +46,6 @@ namespace JobFinderScrapping
         }
 
 
-        public void DescribeYourself()
-        {
-            Console.WriteLine(Name);
-            Console.WriteLine(Industry);
-            Console.WriteLine(Type);
-            Console.WriteLine(NumbOfEmployees);
-            Console.WriteLine(DataOfFoundation);
-            Console.WriteLine(WebSite);
-            Console.WriteLine(Adress + "\n");
-            Console.WriteLine(AboutCompany);
-        }
+       
     }
 }
