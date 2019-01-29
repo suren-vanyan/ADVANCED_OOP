@@ -15,12 +15,11 @@ namespace JobFinderScrapping
         {
             ChromeOptions chromeOptions = new ChromeOptions();
             chromeOptions.AddArgument("--disable-images");
-            string directory = @"D:\GitHub_Projects\ADVANCE_OOP\JobFinderScrapping\JobFinderScrapping\bin\Debug\netcoreapp2.1";
+            string directory = @"D:\GitHub_Projects\ADVANCE_OOP\Scrapping\JobFinderScrapping\bin\Debug\netcoreapp2.1";
             ChromeDriver chromeDriver = new ChromeDriver(directory, chromeOptions);
             chromeDriver.Navigate().GoToUrl(url);
 
             long scrollHeight = 0;
-
             do
             {
                 IJavaScriptExecutor js = chromeDriver;

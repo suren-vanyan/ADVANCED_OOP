@@ -1,4 +1,5 @@
 ﻿using HtmlAgilityPack;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using System;
 using System.Collections.Generic;
@@ -14,22 +15,38 @@ namespace JobFinderScrapping
         {
             ChromeOptions chromeOptions = new ChromeOptions();
             chromeOptions.AddArgument("--disable-images");
-            string directory = @"D:\GitHub_Projects\ADVANCE_OOP\JobFinderScrapping\JobFinderScrapping\bin\Debug\netcoreapp2.1";
+            string directory = @"D:\GitHub_Projects\ADVANCE_OOP\Scrapping\JobFinderScrapping\bin\Debug\netcoreapp2.1";
             ChromeDriver chromeDriver = new ChromeDriver(directory, chromeOptions);
             chromeDriver.Navigate().GoToUrl(url);
-
-            for (int i = 0; i < 20; i++)
+            long scrollHeight = 0;
+            do
             {
-                try
+                IJavaScriptExecutor js = chromeDriver;
+                var newScrollHeight = (long)js.ExecuteScript("window.scrollTo(0, document.body.scrollHeight); return document.body.scrollHeight;");
+
+                if (newScrollHeight == scrollHeight)
                 {
-                    chromeDriver.ExecuteScript($"window.scrollBy(0,1750);");
+                    break;
                 }
-                catch (Exception e)
+                else
                 {
-                    Program.WriteExceptionInFile(e);
+                    scrollHeight = newScrollHeight;
+                    Thread.Sleep(2000);
                 }
-                Thread.Sleep(1000);
-            }
+            } while (true);
+
+            //for (int i = 0; i < 20; i++)
+            //{
+            //    try
+            //    {
+            //        chromeDriver.ExecuteScript($"window.scrollBy(0,1750);");
+            //    }
+            //    catch (Exception e)
+            //    {
+            //        Program.WriteExceptionInFile(e);
+            //    }
+            //    Thread.Sleep(1000);
+            //}
             return chromeDriver.PageSource;
         }
 
