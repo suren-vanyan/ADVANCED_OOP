@@ -2,6 +2,44 @@
 ![staff am gif](https://user-images.githubusercontent.com/38188753/51933414-b7a05b00-241a-11e9-984c-7004fbe2ee9f.gif)
 
 ```c#
+ public static string Scroll(string url)
+        {
+           
+            ChromeOptions chromeOptions = new ChromeOptions();
+            chromeOptions.AddArgument("--disable-images");
+            string directory = @"D:\GitHub_Projects\ADVANCE_OOP\Staff.AmScrapping\Staff.AmScrapping\bin\Debug\netcoreapp2.1";
+            ChromeDriver chromeDriver = new ChromeDriver(directory, chromeOptions);
+            chromeDriver.Navigate().GoToUrl(url);
+
+            //if you want to select all 240 companies remove comments
+            //and put comments on the top loop
+
+            long scrollHeight = 0;
+            do
+            {
+                IJavaScriptExecutor js = chromeDriver;
+                var newScrollHeight = (long)js.ExecuteScript("window.scrollTo(0, document.body.scrollHeight); return document.body.scrollHeight;");
+
+                if (newScrollHeight == scrollHeight)
+                {
+
+                    break;
+                }
+                else
+                {
+                    scrollHeight = newScrollHeight;
+                    Thread.Sleep(2000);
+                }
+            } while (true);
+
+            string returnVaule = chromeDriver.PageSource;
+            chromeDriver.Close();
+            
+            return returnVaule;
+        }
+```
+
+```c#
 using HtmlAgilityPack;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
