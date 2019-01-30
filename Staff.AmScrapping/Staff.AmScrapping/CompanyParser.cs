@@ -53,23 +53,32 @@ namespace Staff.AmScrapping
             return chromeDriver.PageSource;
         }
 
-        static JobDescription GetDescritionForJob(string url)
+       public static JobDescription GetDescritionForJob(string url)
         {
             HtmlWeb htmlWeb = new HtmlWeb();
             HtmlDocument htmlDoc = htmlWeb.Load(url);
 
             HtmlNodeCollection nodes = htmlDoc.DocumentNode.SelectNodes("//div[@id='job-post']");
-
+            
+           
 
             JobDescription job = new JobDescription();
             foreach (var node in nodes)
             {
-                job.JobName = htmlDoc.DocumentNode.SelectSingleNode("//div[@class='col-lg-8']/h2").InnerText;
-                job.Deadline = node.SelectSingleNode("//div[@class='col-lg-4 apply-btn-top']").InnerText.Replace("\n", "");
-                job.EmploymentTerm = node.SelectSingleNode("//div[@class='col-lg-6 job-info']/p").InnerText.Replace("\n", "");
-                job.Description = node.SelectSingleNode("//div[@class='job-list-content-desc']").InnerText.Replace("\n", "");
+                var baseNodeInfo = node.Descendants("div").Where(item=>item.GetAttributeValue("class","").Equals("col-lg-6 job-info")).ToList();
+                var empTermCategory = baseNodeInfo[0].Descendants("p").Select(item => item.InnerText).ToList();
+                job.EmploymentTerm = empTermCategory[0];
+                job.Category = empTermCategory[1];
+                var typeAndLocation = baseNodeInfo[1].Descendants("p").Select(item => item.InnerText).ToList();
+                job.Type = typeAndLocation[0];
+                job.Location = typeAndLocation[1];
+                job.JobName = htmlDoc.DocumentNode.SelectSingleNode("//div[@class='col-lg-8']/h2[1]").InnerText;
+                job.Deadline = node.SelectSingleNode("//div[@class='col-lg-4 apply-btn-top']/p[1]").InnerText.Replace("\n", "");
 
-
+                //job.Category = node.SelectNodes("//div[@class='col-lg-6 job-info']/p[2]").FirstOrDefault().InnerText.Trim('\r','\n','\t');
+                job.Description = node.SelectSingleNode("//div[@class='job-list-content-desc']/p").InnerText.Trim('\r', '\n', '\t');
+                job.JobResponsibilities = node.SelectSingleNode("//div[@class='job-list-content-desc']/p[2]").InnerText.Trim('\r', '\n', '\t');
+                job.RequiredQualifications = node.SelectSingleNode("//div[@class='job-list-content-desc']/p[3]").InnerText.Trim('\r', '\n', '\t');
             }
 
             return job;
