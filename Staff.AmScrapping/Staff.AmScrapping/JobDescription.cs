@@ -16,5 +16,9 @@ namespace Staff.AmScrapping
         public string Type { get; set; }
         public string Location { get; set; }
 
+        public override string ToString()
+        {
+            return $"{JobName}\n {Type}\n{Location}\n{Category}\n{Deadline}\n{EmploymentTerm}\n\n{Description}\n\n{JobResponsibilities}\n\n{RequiredQualifications}";
+        }
     }
 }

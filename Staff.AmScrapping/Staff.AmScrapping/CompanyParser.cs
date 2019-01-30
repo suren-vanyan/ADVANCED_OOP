@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Staff.AmScrapping
 {
@@ -92,7 +93,11 @@ namespace Staff.AmScrapping
         }
 
 
-
+        public static async Task<List<Company>> SearchAllCompaniesAsync(string url)
+        {
+          return await Task.Run(() => SearchAllCompanies(url));
+            
+        }
         /// <summary>
         /// At the beginning using the scroll method finds all companies the maximum number is 240
         /// Then we find the address of a particular company
@@ -176,9 +181,9 @@ namespace Staff.AmScrapping
                 allCompanies.Add(company);
                 Console.WriteLine(company);
                 Console.WriteLine("All Active Jobs=>");
-                company.jobDescriptions.ForEach(item => Console.WriteLine(item));
-                Thread.Sleep(8000);
-                Console.Clear();
+               // company.jobDescriptions.ForEach(item => Console.WriteLine(item));
+               // Thread.Sleep(8000);
+               // Console.Clear();
 
             }
 
