@@ -9,13 +9,13 @@ namespace Staff.AmScrapping
 {
     class Scrolling
     {
-        public static string Scroll(string url, Queue<string> status)
+        public static string Scroll(string url)
         {
-            status.Enqueue("Start Scrolling");
+           
             ChromeOptions chromeOptions = new ChromeOptions();
             chromeOptions.AddArgument("--disable-images");
             string directory = @"C:\Users\suren.vanyan\source\repos\suren-vanyan\ADVANCED_OOP\Staff.AmScrapping\Staff.AmScrapping\bin\Debug\netcoreapp2.1";
-            ChromeDriver chromeDriver = new ChromeDriver( directory,chromeOptions);
+            ChromeDriver chromeDriver = new ChromeDriver(directory, chromeOptions);
             chromeDriver.Navigate().GoToUrl(url);
 
             //for (int i = 0; i < 2; i++)
@@ -53,9 +53,9 @@ namespace Staff.AmScrapping
                 }
             } while (true);
 
-            string returnVaule= chromeDriver.PageSource;
+            string returnVaule = chromeDriver.PageSource;
             chromeDriver.Close();
-            status.Enqueue("End Scrolling");
+            
             return returnVaule;
         }
     }

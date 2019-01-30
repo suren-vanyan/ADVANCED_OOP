@@ -11,12 +11,12 @@ namespace Staff.AmScrapping
 {
     class ActiveJobsParser
     {
-       
-        public static List<ActiveJobs> SearchAllActiveJob(string url, Queue<string> status)
+
+        public static List<ActiveJobs> SearchAllActiveJob(string url)
         {
 
             HtmlDocument doc = new HtmlDocument();
-            doc.LoadHtml(Scrolling.Scroll(url,status));
+            doc.LoadHtml(Scrolling.Scroll(url));
 
             string path1 = "//div[@class=\"job-inner job-item-title\"]";
 

@@ -16,8 +16,8 @@ namespace Staff.AmScrapping
         public string AboutCompany { get; set; }
         public string WebSite { get; set; }
         public string Adress { get; set; }
-       // public List<ActiveJobs> ActiveJobs { get; set; }= new List<ActiveJobs>();
-        public List<JobDescription>  jobDescriptions { get; set; } = new List<JobDescription>();
+        // public List<ActiveJobs> ActiveJobs { get; set; }= new List<ActiveJobs>();
+        public List<JobDescription> jobDescriptions { get; set; } = new List<JobDescription>();
 
         public Company(string name, string industry, string type, string numbOfEmployees,
             string dataOfFoundation, string webSite, string adress, string aboutCompany)
@@ -30,7 +30,7 @@ namespace Staff.AmScrapping
             WebSite = webSite;
             Adress = adress;
             AboutCompany = aboutCompany;
-          
+
         }
 
         public Company()
@@ -43,6 +43,6 @@ namespace Staff.AmScrapping
             return $"{Name}\n{Industry}\n{Type}\n{NumbOfEmployees}\n{DataOfFoundation}\n{WebSite}\n{Adress}" +
                 $"\n\n{AboutCompany}";
         }
-       
+
     }
 }

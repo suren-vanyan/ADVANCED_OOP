@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2050
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Staff.AmScrapping", "Staff.AmScrapping\Staff.AmScrapping.csproj", "{4C526CFA-302F-40D1-B081-77AA4B3312E4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Staff.AmScrapping", "Staff.AmScrapping\Staff.AmScrapping.csproj", "{DDC297A0-CAE4-40B6-9F4B-4E1786845466}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{4C526CFA-302F-40D1-B081-77AA4B3312E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4C526CFA-302F-40D1-B081-77AA4B3312E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4C526CFA-302F-40D1-B081-77AA4B3312E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4C526CFA-302F-40D1-B081-77AA4B3312E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DDC297A0-CAE4-40B6-9F4B-4E1786845466}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DDC297A0-CAE4-40B6-9F4B-4E1786845466}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DDC297A0-CAE4-40B6-9F4B-4E1786845466}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DDC297A0-CAE4-40B6-9F4B-4E1786845466}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {F26EF89A-43B0-4B84-9625-BFACBF7EF955}
+		SolutionGuid = {258F9748-52F5-46A9-8C09-A2AF88C7A0D0}
 	EndGlobalSection
 EndGlobal
