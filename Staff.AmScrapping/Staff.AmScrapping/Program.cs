@@ -25,7 +25,39 @@ namespace Staff.AmScrapping
             }
         }
 
+        public static void Loading(Task task)
+        {
+           
+            while (!task.IsCompleted)
+            {
+                Console.Clear();
+                Console.Write("Loading");
+                for (int i = 0; i < 10; i++)
+                {
+                    Console.Write(".");
 
+                    Thread.Sleep(500);
+                }
+                Console.Clear();
+            }
+        }
+        public static void PrintFullInformationForCompanies(List<Company> companies)
+        {
+            Random random = new Random();
+            foreach (var company in companies)
+            {
+                Console.ForegroundColor =(ConsoleColor)random.Next(1, 15);
+                Console.WriteLine(company);
+                Console.WriteLine(new string('*', 40));
+                company.jobDescriptions.ForEach(item => 
+                {
+                    Console.ForegroundColor = (ConsoleColor)random.Next(1, 15);
+                    Console.WriteLine(item);
+                    Console.WriteLine(new string('*',40));
+                } );
+            }
+        }
+        
         static void Main(string[] args)
         {
             Console.OutputEncoding = Encoding.UTF8;
@@ -34,27 +66,16 @@ namespace Staff.AmScrapping
            
 
             string urlForSearchAllCompanies = @"https://staff.am/en/companies?CompaniesFilter%5BkeyWord%5D=&CompaniesFilter%5Bindustries%5D=&CompaniesFilter%5Bindustries%5D%5B%5D=2&CompaniesFilter%5Bemployees_number%5D=&CompaniesFilter%5Bsort_by%5D=&CompaniesFilter%5Bhas_job%5D=";
-            var allActiveJobsTask = Task.Run(() => CompanyParser.SearchAllCompaniesAsync(urlForSearchAllCompanies));
+            var taskForFindAllCompanies = Task.Run(() => CompanyParser.SearchURLForAllCompaniesAsync(urlForSearchAllCompanies));
 
-            Console.Clear();
-            //while (!allActiveJobsTask.IsCompleted)
-            //{
-            //    if(status.Dequeue()!=null)
-            //        Console.WriteLine(status.Dequeue());
-            //    for (int i = 0; i < 5; i++)
-            //    {
-            //        Console.Write(".");
+           
+            Loading(taskForFindAllCompanies);
 
-            //        Thread.Sleep(500);
-            //    }
-            //    Console.Clear();
-            //}
-
-            List<Company> allActiveJobs1 = allActiveJobsTask.Result;
-
+            List<Company> companies = taskForFindAllCompanies.Result;
+            PrintFullInformationForCompanies(companies);
             Console.ReadKey();
 
-            //CompanyParser.GetDescritionForJob("https://staff.am/en/software-engineer-php-oriented-1");
+           
         }
     }
 }

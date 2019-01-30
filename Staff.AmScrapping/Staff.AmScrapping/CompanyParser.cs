@@ -24,7 +24,7 @@ namespace Staff.AmScrapping
 
             HtmlWeb htmlWeb = new HtmlWeb();
             HtmlDocument htmlDoc = htmlWeb.Load(url);
-            Console.WriteLine(htmlWeb.StatusCode);
+           
             HtmlNodeCollection nodes = htmlDoc.DocumentNode.SelectNodes("//div[@id='job-post']");
             JobDescription job = new JobDescription();
             try
@@ -62,7 +62,7 @@ namespace Staff.AmScrapping
         /// </summary>
         /// <param name="doc">HtmlDocument</param>
         /// <returns> List<JobDescription></returns>
-        public static List<JobDescription> SearchLinqForActiveJobs(HtmlDocument doc)
+        public static List<JobDescription> SearchActiveJobsURLForCompany(HtmlDocument doc)
         {
 
             HtmlNodeCollection nodes = doc.DocumentNode.SelectNodes("//div[@class='col-sm-6 pl5']");
@@ -94,9 +94,9 @@ namespace Staff.AmScrapping
         }
 
 
-        public static async Task<List<Company>> SearchAllCompaniesAsync(string url)
+        public static async Task<List<Company>> SearchURLForAllCompaniesAsync(string url)
         {
-            return await Task.Run(() => SearchAllCompanies(url));
+            return await Task.Run(() => SearchURLForAllCompanies(url));
 
         }
 
@@ -107,13 +107,14 @@ namespace Staff.AmScrapping
         /// </summary>
         /// <param name="url">https://staff.am/en/companies?CompaniesFilter%5BkeyWord%5D=&CompaniesFilter%5Bindustries%5D=&CompaniesFilter%5Bindustries%5D%5B%5D=2&CompaniesFilter%5Bemployees_number%5D=&CompaniesFilter%5Bsort_by%5D=&CompaniesFilter%5Bhas_job%5D=</param>
         /// <returns> List<Company> </returns>
-        public static List<Company> SearchAllCompanies(string url)
+        public static List<Company> SearchURLForAllCompanies(string url)
         {
             
             HtmlWeb htmlWeb = new HtmlWeb();
             HtmlDocument doc = new HtmlDocument();
             //if you want to select all 240 companies remove comments  Method Scroll      
             doc.LoadHtml(Scrolling.Scroll(url));
+            List<Company> allCompanies = null;
 
             HtmlNodeCollection nodes = doc.DocumentNode.SelectNodes("//div[@class=\"company-action company_inner_right\"]");
             List<string> companyUrlList = new List<string>();
@@ -126,12 +127,24 @@ namespace Staff.AmScrapping
                     companyUrlList.Add(@"https://staff.am" + jobUrl);
 
                 }
-            }
-            catch (Exception e)
-            {
-                Program.WriteExceptionInFile(e);
-            }
 
+                allCompanies = GetAllCompaniesWithTheirJobs(companyUrlList);
+            }
+            catch (Exception e) { Program.WriteExceptionInFile(e); }
+           
+            return allCompanies;
+        }
+
+
+        /// <summary>
+        /// This method calls the SearchActiveJobsURLForCompany method which in turn finds all the active work for a particular company.
+        /// then finds a description of the company
+        /// </summary>
+        /// <param name="companyUrlList">List<string> For example:compnayURL="https://staff.am/en/company/betconstruct"</param>
+        /// <returns>List<Company></returns>
+        public static List<Company> GetAllCompaniesWithTheirJobs(List<string> companyUrlList)
+        {
+            HtmlWeb htmlWeb = new HtmlWeb();
             List<Company> allCompanies = new List<Company>();
             foreach (var companyUrl in companyUrlList)
             {
@@ -143,7 +156,7 @@ namespace Staff.AmScrapping
                     HtmlDocument htmlDoc = htmlWeb.Load(companyUrl);
 
 
-                    company.jobDescriptions = SearchLinqForActiveJobs(htmlDoc);
+                    company.jobDescriptions = SearchActiveJobsURLForCompany(htmlDoc);
 
                     string companyProperties = "//p[@class=\"professional-skills-description\"]";
                     // string companyProperties = "//div[@class='professional-skills-description']";                 
@@ -156,7 +169,6 @@ namespace Staff.AmScrapping
 
                     string companyName = "//h1[@class=\"text-left\"]";
                     HtmlNodeCollection htmlNodeOfName = htmlDoc.DocumentNode.SelectNodes(companyName);
-
 
                     List<string> nodeInnerText = htmlNodes.Select(node => node.InnerText.Replace("\n", "").ToLower()).ToList();
                     foreach (var innerText in nodeInnerText)
@@ -174,20 +186,11 @@ namespace Staff.AmScrapping
                     if (nodeofName != null) company.Name = nodeofName[0];
                     if (textAboutComp != null) company.AboutCompany = textAboutComp[0];
 
-
-
-
                 }
                 catch (ArgumentException arg) { Program.WriteExceptionInFile(arg); }
                 catch (Exception e) { Program.WriteExceptionInFile(e); }
 
                 allCompanies.Add(company);
-                Console.WriteLine(company);
-                Console.WriteLine("All Active Jobs=>");
-                // company.jobDescriptions.ForEach(item => Console.WriteLine(item));
-                // Thread.Sleep(8000);
-                // Console.Clear();
-
             }
 
             return allCompanies;
