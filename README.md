@@ -1,3 +1,7 @@
+- .Net Core 2.1
+- .NET Framework 4.7.2
+- Visual Studio 2017
+
 # Advanced C# Programming Course  <img src="https://www.onlinebooksreview.com/uploads/blog_images/2018/01/27_c-sharp-logo-filled.png" align="right" width="150px" height="150px" /> 
 
 ## :heavy_check_mark: [Scrapping](https://github.com/suren-vanyan/ADVANCED_OOP/tree/master/Staff.AmScrapping)
