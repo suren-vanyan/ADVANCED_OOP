@@ -32,7 +32,7 @@ public static string Scroll(string url)
 ```
 
 
-``` class CompanyParser 
+```C# class CompanyParser 
 
 using HtmlAgilityPack;
 using OpenQA.Selenium;
