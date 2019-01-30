@@ -53,62 +53,90 @@ namespace Staff.AmScrapping
             return chromeDriver.PageSource;
         }
 
-       public static JobDescription GetDescritionForJob(string url)
+
+        /// <summary>
+        /// this method finds all active jobs and returns their full description.
+        /// </summary>
+        /// <param name="url>"For Example=> https://staff.am/en/software-engineer-php-oriented-1""</param>
+        /// <returns> JobDescription</returns>
+        public static JobDescription GetDescritionForJob(string url)
         {
             HtmlWeb htmlWeb = new HtmlWeb();
             HtmlDocument htmlDoc = htmlWeb.Load(url);
 
             HtmlNodeCollection nodes = htmlDoc.DocumentNode.SelectNodes("//div[@id='job-post']");
-            
-           
-
             JobDescription job = new JobDescription();
-            foreach (var node in nodes)
+            try
             {
-                var baseNodeInfo = node.Descendants("div").Where(item=>item.GetAttributeValue("class","").Equals("col-lg-6 job-info")).ToList();
-                var empTermCategory = baseNodeInfo[0].Descendants("p").Select(item => item.InnerText).ToList();
-                job.EmploymentTerm = empTermCategory[0];
-                job.Category = empTermCategory[1];
-                var typeAndLocation = baseNodeInfo[1].Descendants("p").Select(item => item.InnerText).ToList();
-                job.Type = typeAndLocation[0];
-                job.Location = typeAndLocation[1];
-                job.JobName = htmlDoc.DocumentNode.SelectSingleNode("//div[@class='col-lg-8']/h2[1]").InnerText;
-                job.Deadline = node.SelectSingleNode("//div[@class='col-lg-4 apply-btn-top']/p[1]").InnerText.Replace("\n", "");
+                foreach (var node in nodes)
+                {
+                    var baseNodeInfo = node.Descendants("div").Where(item => item.GetAttributeValue("class", "").Equals("col-lg-6 job-info")).ToList();
+                    var empTermCategory = baseNodeInfo[0].Descendants("p").Select(item => item.InnerText).ToList();
+                    job.EmploymentTerm = empTermCategory[0];
+                    job.Category = empTermCategory[1];
+                    var typeAndLocation = baseNodeInfo[1].Descendants("p").Select(item => item.InnerText).ToList();
+                    job.Type = typeAndLocation[0];
+                    job.Location = typeAndLocation[1];
+                    job.JobName = htmlDoc.DocumentNode.SelectSingleNode("//div[@class='col-lg-8']/h2[1]").InnerText;
+                    job.Deadline = node.SelectSingleNode("//div[@class='col-lg-4 apply-btn-top']/p[1]").InnerText.Replace("\n", "");
 
-                //job.Category = node.SelectNodes("//div[@class='col-lg-6 job-info']/p[2]").FirstOrDefault().InnerText.Trim('\r','\n','\t');
-                job.Description = node.SelectSingleNode("//div[@class='job-list-content-desc']/p").InnerText.Trim('\r', '\n', '\t');
-                job.JobResponsibilities = node.SelectSingleNode("//div[@class='job-list-content-desc']/p[2]").InnerText.Trim('\r', '\n', '\t');
-                job.RequiredQualifications = node.SelectSingleNode("//div[@class='job-list-content-desc']/p[3]").InnerText.Trim('\r', '\n', '\t');
+                    //job.Category = node.SelectNodes("//div[@class='col-lg-6 job-info']/p[2]").FirstOrDefault().InnerText.Trim('\r','\n','\t');
+                    job.Description = node.SelectSingleNode("//div[@class='job-list-content-desc']/p").InnerText.Trim('\r', '\n', '\t');
+                    job.JobResponsibilities = node.SelectSingleNode("//div[@class='job-list-content-desc']/p[2]").InnerText.Trim('\r', '\n', '\t');
+                    job.RequiredQualifications = node.SelectSingleNode("//div[@class='job-list-content-desc']/p[3]").InnerText.Trim('\r', '\n', '\t');
+                }
             }
+            catch (Exception e) { Program.WriteExceptionInFile(e); }
+           
 
             return job;
         }
 
-        public static List<JobDescription> SearchActiveJobForCompany(HtmlDocument doc)
+
+        /// <summary>
+        /// In this Method First we find all the links to active works.
+        /// after, we call the method GetDescritionForJob to which we transfer the reference to the work
+        /// which in turn finds all active jobs and returns their full description.
+        /// </summary>
+        /// <param name="doc">HtmlDocument</param>
+        /// <returns> List<JobDescription></returns>
+        public static List<JobDescription> SearchLinqForActiveJobs(HtmlDocument doc)
         {
 
             HtmlNodeCollection nodes = doc.DocumentNode.SelectNodes("//div[@class='col-sm-6 pl5']");
             List<string> activeJobsUrlList = new List<string>();
-            foreach (HtmlNode node in nodes)
+
+            //find all links to active work
+            try
             {
+                foreach (HtmlNode node in nodes)
+                {
 
-                var jobUrl = node.SelectSingleNode(".//a").Attributes[1].Value;
-                activeJobsUrlList.Add(@"https://staff.am" + jobUrl);
+                    var jobUrl = node.SelectSingleNode(".//a").Attributes[1].Value;
+                    activeJobsUrlList.Add(@"https://staff.am" + jobUrl);
+                }
+
             }
-
-
+            catch (Exception) { }
+            
+            
             List<JobDescription> allActiveJobs = new List<JobDescription>();
             foreach (var url in activeJobsUrlList)
             {
+                //call the method for Example:url="https://staff.am/en/software-engineer-php-oriented-1"
                 allActiveJobs.Add(GetDescritionForJob(url));
             }
-
-
-
 
             return allActiveJobs;
         }
 
+
+        /// <summary>
+        /// At the beginning using the scroll method finds all companies the maximum number is 240
+        /// Then we find the address of a particular company
+        /// </summary>
+        /// <param name="url">https://staff.am/en/companies?CompaniesFilter%5BkeyWord%5D=&CompaniesFilter%5Bindustries%5D=&CompaniesFilter%5Bindustries%5D%5B%5D=2&CompaniesFilter%5Bemployees_number%5D=&CompaniesFilter%5Bsort_by%5D=&CompaniesFilter%5Bhas_job%5D=</param>
+        /// <returns> List<Company> </returns>
         public static List<Company> SearchAllCompanies(string url)
         {
 
@@ -120,6 +148,7 @@ namespace Staff.AmScrapping
             List<string> companyUrlList = new List<string>();
             try
             {
+               // find the address of a particular company
                 foreach (HtmlNode node in nodes)
                 {
                     var jobUrl = node.SelectSingleNode(".//a").Attributes[0].Value;
@@ -139,10 +168,11 @@ namespace Staff.AmScrapping
 
                 try
                 {
-
+                    // For example:compnayURL="https://staff.am/en/company/betconstruct"
                     HtmlDocument htmlDoc = htmlWeb.Load(companyUrl);
 
-                    company.jobDescriptions = SearchActiveJobForCompany(htmlDoc);
+
+                    company.jobDescriptions = SearchLinqForActiveJobs(htmlDoc);
 
                     string companyProperties = "//p[@class=\"professional-skills-description\"]";
                     // string companyProperties = "//div[@class='professional-skills-description']";                 
