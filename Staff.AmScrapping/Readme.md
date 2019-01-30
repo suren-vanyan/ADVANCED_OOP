@@ -1,4 +1,4 @@
-- .netcore 2.1
+- .Net Core 2.1
 - Visual Studio 2017
 
 # **_This project is looking for all the companies on the Staff.am website, as well as all the works that offer this companies_**
