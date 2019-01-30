@@ -30,6 +30,10 @@ namespace Staff.AmScrapping
                 Thread.Sleep(2000);
             }
 
+
+            //if you want to select all 240 companies remove comments
+            //and put comments on the top loop
+
             //long scrollHeight = 0;
             //do
             //{
