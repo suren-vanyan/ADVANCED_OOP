@@ -12,48 +12,7 @@ namespace Staff.AmScrapping
 {
     public class CompanyParser
     {
-        public static string Scroll(string url)
-        {
-            ChromeOptions chromeOptions = new ChromeOptions();
-            chromeOptions.AddArgument("--disable-images");
-            string directory = @"D:\GitHub_Projects\ADVANCE_OOP\Staff.AmScrapping\Staff.AmScrapping\bin\Debug\netcoreapp2.1";
-            ChromeDriver chromeDriver = new ChromeDriver(directory, chromeOptions);
-            chromeDriver.Navigate().GoToUrl(url);
-
-            for (int i = 0; i < 2; i++)
-            {
-                try
-                {
-                    chromeDriver.ExecuteScript($"window.scrollBy(0,1750);");
-                }
-                catch (Exception e)
-                {
-                    Program.WriteExceptionInFile(e);
-                }
-                Thread.Sleep(2000);
-            }
-
-            //long scrollHeight = 0;
-            //do
-            //{
-            //    IJavaScriptExecutor js = chromeDriver;
-            //    var newScrollHeight = (long)js.ExecuteScript("window.scrollTo(0, document.body.scrollHeight); return document.body.scrollHeight;");
-
-            //    if (newScrollHeight == scrollHeight)
-            //    {
-            //        break;
-            //    }
-            //    else
-            //    {
-            //        scrollHeight = newScrollHeight;
-            //        Thread.Sleep(2000);
-            //    }
-            //} while (true);
-
-            return chromeDriver.PageSource;
-        }
-
-
+       
         /// <summary>
         /// this method finds all active jobs and returns their full description.
         /// </summary>
@@ -71,13 +30,13 @@ namespace Staff.AmScrapping
                 foreach (var node in nodes)
                 {
                     var baseNodeInfo = node.Descendants("div").Where(item => item.GetAttributeValue("class", "").Equals("col-lg-6 job-info")).ToList();
-                    var empTermCategory = baseNodeInfo[0].Descendants("p").Select(item => item.InnerText).ToList();
+                    var empTermCategory = baseNodeInfo[0].Descendants("p").Select(item => item.InnerText.Trim('\r', '\n', '\t')).ToList();
                     job.EmploymentTerm = empTermCategory[0];
                     job.Category = empTermCategory[1];
-                    var typeAndLocation = baseNodeInfo[1].Descendants("p").Select(item => item.InnerText).ToList();
+                    var typeAndLocation = baseNodeInfo[1].Descendants("p").Select(item => item.InnerText.Trim('\r', '\n', '\t')).ToList();
                     job.Type = typeAndLocation[0];
                     job.Location = typeAndLocation[1];
-                    job.JobName = htmlDoc.DocumentNode.SelectSingleNode("//div[@class='col-lg-8']/h2[1]").InnerText;
+                    job.JobName = htmlDoc.DocumentNode.SelectSingleNode("//div[@class='col-lg-8']/h2[1]").InnerText.Trim('\r', '\n', '\t');
                     job.Deadline = node.SelectSingleNode("//div[@class='col-lg-4 apply-btn-top']/p[1]").InnerText.Replace("\n", "");
 
                     //job.Category = node.SelectNodes("//div[@class='col-lg-6 job-info']/p[2]").FirstOrDefault().InnerText.Trim('\r','\n','\t');
@@ -93,6 +52,7 @@ namespace Staff.AmScrapping
         }
 
 
+
         /// <summary>
         /// In this Method First we find all the links to active works.
         /// after, we call the method GetDescritionForJob to which we transfer the reference to the work
@@ -106,9 +66,10 @@ namespace Staff.AmScrapping
             HtmlNodeCollection nodes = doc.DocumentNode.SelectNodes("//div[@class='col-sm-6 pl5']");
             List<string> activeJobsUrlList = new List<string>();
 
-            //find all links to active work
+            
             try
             {
+                //find all links to active work
                 foreach (HtmlNode node in nodes)
                 {
 
@@ -131,6 +92,7 @@ namespace Staff.AmScrapping
         }
 
 
+
         /// <summary>
         /// At the beginning using the scroll method finds all companies the maximum number is 240
         /// Then we find the address of a particular company
@@ -142,7 +104,7 @@ namespace Staff.AmScrapping
 
             HtmlWeb htmlWeb = new HtmlWeb();
             HtmlDocument doc = new HtmlDocument();
-            doc.LoadHtml(Scroll(url));
+            doc.LoadHtml(Scrolling.Scroll(url));
 
             HtmlNodeCollection nodes = doc.DocumentNode.SelectNodes("//div[@class=\"company-action company_inner_right\"]");
             List<string> companyUrlList = new List<string>();
@@ -212,9 +174,9 @@ namespace Staff.AmScrapping
 
                 allCompanies.Add(company);
                 Console.WriteLine(company);
-               // Console.WriteLine("Active Jobs=>");
-                //company.ActiveJobs.ForEach(item => Console.WriteLine(item));
-               // Thread.Sleep(8000);
+                Console.WriteLine("All Active Jobs=>");
+                company.jobDescriptions.ForEach(item => Console.WriteLine(item));
+                Thread.Sleep(8000);
                 Console.Clear();
 
             }
