@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 
-namespace JobFinderScrapping
+namespace Staff.AmScrapping
 {
     class ActiveJobsParser
     {

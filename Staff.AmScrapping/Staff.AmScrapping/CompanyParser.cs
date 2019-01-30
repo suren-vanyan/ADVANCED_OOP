@@ -8,9 +8,9 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 
-namespace JobFinderScrapping
+namespace Staff.AmScrapping
 {
-    public static class CompanyParser
+    public class CompanyParser
     {
         public static string Scroll(string url)
         {
@@ -53,55 +53,56 @@ namespace JobFinderScrapping
             return chromeDriver.PageSource;
         }
 
-        public static List<ActiveJobs> SearchActiveJobForCompany(HtmlDocument doc)
+        static JobDescription GetDescritionForJob(string url)
         {
+            HtmlWeb htmlWeb = new HtmlWeb();
+            HtmlDocument htmlDoc = htmlWeb.Load(url);
+
+            HtmlNodeCollection nodes = htmlDoc.DocumentNode.SelectNodes("//div[@id='job-post']");
 
 
-            //HtmlNodeCollection jobItemTitle = doc.DocumentNode.SelectNodes("//div[@class=\"job-inner job-item-title\"]");
-            //HtmlNodeCollection jobԼistDeadline = doc.DocumentNode.SelectNodes("//div[@class='job-inner job-list-deadline']");
-            //HtmlNodeCollection jobLocation = doc.DocumentNode.SelectNodes("//div[@class='job-inner job-location']");
-            //for (int i = 0; i < jobItemTitle.Count; i++)
-            //{
-            //    var location = jobLocation[i].InnerText.Replace(" ", "").Replace("\n", "");
-            //    var names = (jobItemTitle[i].InnerText.Replace(" ", "").Split('\n')
-            //    .Select(item => item.Replace("\r", ""))).ToArray();
+            JobDescription job = new JobDescription();
+            foreach (var node in nodes)
+            {
+                job.JobName = htmlDoc.DocumentNode.SelectSingleNode("//div[@class='col-lg-8']/h2").InnerText;
+                job.Deadline = node.SelectSingleNode("//div[@class='col-lg-4 apply-btn-top']").InnerText.Replace("\n", "");
+                job.EmploymentTerm = node.SelectSingleNode("//div[@class='col-lg-6 job-info']/p").InnerText.Replace("\n", "");
+                job.Description = node.SelectSingleNode("//div[@class='job-list-content-desc']").InnerText.Replace("\n", "");
 
-            //    var data = jobԼistDeadline[i].InnerText.Replace(" ", "").Split('\n')
-            //                .Select(item => item.Replace("\r", ""))
-            //                .Where(item => !string.IsNullOrEmpty(item)).ToArray();
 
-            //    ActiveJobs activeJobs = new ActiveJobs
-            //    {
-            //        CompanyJobName = names[1],
-            //        CompanyName = names[2],
-            //        JobData = string.Join(" ", data),
-            //        Location = location
-            //    };
+            }
 
-            //    allActiveJobs.Add(activeJobs);
-            //}
+            return job;
+        }
 
+        public static List<JobDescription> SearchActiveJobForCompany(HtmlDocument doc)
+        {
 
             HtmlNodeCollection nodes = doc.DocumentNode.SelectNodes("//div[@class='col-sm-6 pl5']");
             List<string> activeJobsUrlList = new List<string>();
             foreach (HtmlNode node in nodes)
             {
-               
+
                 var jobUrl = node.SelectSingleNode(".//a").Attributes[1].Value;
-                activeJobsUrlList.Add(@"https://staff.am" + jobUrl);                  
+                activeJobsUrlList.Add(@"https://staff.am" + jobUrl);
             }
 
 
-            List<ActiveJobs> allActiveJobs = new List<ActiveJobs>();
+            List<JobDescription> allActiveJobs = new List<JobDescription>();
+            foreach (var url in activeJobsUrlList)
+            {
+                allActiveJobs.Add(GetDescritionForJob(url));
+            }
 
-           
+
+
 
             return allActiveJobs;
         }
 
         public static List<Company> SearchAllCompanies(string url)
         {
-          
+
             HtmlWeb htmlWeb = new HtmlWeb();
             HtmlDocument doc = new HtmlDocument();
             doc.LoadHtml(Scroll(url));
@@ -114,7 +115,7 @@ namespace JobFinderScrapping
                 {
                     var jobUrl = node.SelectSingleNode(".//a").Attributes[0].Value;
                     companyUrlList.Add(@"https://staff.am" + jobUrl);
-                  
+
                 }
             }
             catch (Exception e)
@@ -132,7 +133,7 @@ namespace JobFinderScrapping
 
                     HtmlDocument htmlDoc = htmlWeb.Load(companyUrl);
 
-                    company.ActiveJobs = SearchActiveJobForCompany(htmlDoc);
+                    company.jobDescriptions = SearchActiveJobForCompany(htmlDoc);
 
                     string companyProperties = "//p[@class=\"professional-skills-description\"]";
                     // string companyProperties = "//div[@class='professional-skills-description']";                 
@@ -172,9 +173,9 @@ namespace JobFinderScrapping
 
                 allCompanies.Add(company);
                 Console.WriteLine(company);
-                Console.WriteLine("Active Jobs=>");
-                company.ActiveJobs.ForEach(item => Console.WriteLine(item));
-                Thread.Sleep(8000);
+               // Console.WriteLine("Active Jobs=>");
+                //company.ActiveJobs.ForEach(item => Console.WriteLine(item));
+               // Thread.Sleep(8000);
                 Console.Clear();
 
             }

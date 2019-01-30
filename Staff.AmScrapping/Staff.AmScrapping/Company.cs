@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace JobFinderScrapping
+namespace Staff.AmScrapping
 {
     public class Company
     {
@@ -17,7 +17,7 @@ namespace JobFinderScrapping
         public string WebSite { get; set; }
         public string Adress { get; set; }
         public List<ActiveJobs> ActiveJobs { get; set; }= new List<ActiveJobs>();
-       
+        public List<JobDescription>  jobDescriptions { get; set; } = new List<JobDescription>();
 
         public Company(string name, string industry, string type, string numbOfEmployees,
             string dataOfFoundation, string webSite, string adress, string aboutCompany)
