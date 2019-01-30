@@ -19,11 +19,12 @@ namespace Staff.AmScrapping
         /// </summary>
         /// <param name="url>"For Example=> https://staff.am/en/software-engineer-php-oriented-1""</param>
         /// <returns> JobDescription</returns>
-        public static JobDescription GetDescritionForJob(string url)
+        public static JobDescription GetDescritionForJob(string url, Queue<string> status)
         {
+
             HtmlWeb htmlWeb = new HtmlWeb();
             HtmlDocument htmlDoc = htmlWeb.Load(url);
-
+            Console.WriteLine(htmlWeb.StatusCode);
             HtmlNodeCollection nodes = htmlDoc.DocumentNode.SelectNodes("//div[@id='job-post']");
             JobDescription job = new JobDescription();
             try
@@ -61,7 +62,7 @@ namespace Staff.AmScrapping
         /// </summary>
         /// <param name="doc">HtmlDocument</param>
         /// <returns> List<JobDescription></returns>
-        public static List<JobDescription> SearchLinqForActiveJobs(HtmlDocument doc)
+        public static List<JobDescription> SearchLinqForActiveJobs(HtmlDocument doc, Queue<string> status)
         {
 
             HtmlNodeCollection nodes = doc.DocumentNode.SelectNodes("//div[@class='col-sm-6 pl5']");
@@ -86,31 +87,33 @@ namespace Staff.AmScrapping
             foreach (var url in activeJobsUrlList)
             {
                 //call the method for Example:url="https://staff.am/en/software-engineer-php-oriented-1"
-                allActiveJobs.Add(GetDescritionForJob(url));
+                allActiveJobs.Add(GetDescritionForJob(url, status));
             }
 
             return allActiveJobs;
         }
 
 
-        public static async Task<List<Company>> SearchAllCompaniesAsync(string url)
+        public static async Task<List<Company>> SearchAllCompaniesAsync(string url, Queue<string> status)
         {
-          return await Task.Run(() => SearchAllCompanies(url));
+          return await Task.Run(() => SearchAllCompanies(url, status));
             
         }
+
+
         /// <summary>
         /// At the beginning using the scroll method finds all companies the maximum number is 240
         /// Then we find the address of a particular company
         /// </summary>
         /// <param name="url">https://staff.am/en/companies?CompaniesFilter%5BkeyWord%5D=&CompaniesFilter%5Bindustries%5D=&CompaniesFilter%5Bindustries%5D%5B%5D=2&CompaniesFilter%5Bemployees_number%5D=&CompaniesFilter%5Bsort_by%5D=&CompaniesFilter%5Bhas_job%5D=</param>
         /// <returns> List<Company> </returns>
-        public static List<Company> SearchAllCompanies(string url)
+        public static List<Company> SearchAllCompanies(string url, Queue<string> status)
         {
-
+            status.Enqueue("Start method SearchAllCompanies");
             HtmlWeb htmlWeb = new HtmlWeb();
             HtmlDocument doc = new HtmlDocument();
             //if you want to select all 240 companies remove comments  Method Scroll      
-            doc.LoadHtml(Scrolling.Scroll(url));
+            doc.LoadHtml(Scrolling.Scroll(url,status));
 
             HtmlNodeCollection nodes = doc.DocumentNode.SelectNodes("//div[@class=\"company-action company_inner_right\"]");
             List<string> companyUrlList = new List<string>();
@@ -140,7 +143,7 @@ namespace Staff.AmScrapping
                     HtmlDocument htmlDoc = htmlWeb.Load(companyUrl);
 
 
-                    company.jobDescriptions = SearchLinqForActiveJobs(htmlDoc);
+                    company.jobDescriptions = SearchLinqForActiveJobs(htmlDoc,status);
 
                     string companyProperties = "//p[@class=\"professional-skills-description\"]";
                     // string companyProperties = "//div[@class='professional-skills-description']";                 

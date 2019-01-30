@@ -9,8 +9,9 @@ namespace Staff.AmScrapping
 {
     class Scrolling
     {
-        public static string Scroll(string url)
+        public static string Scroll(string url, Queue<string> status)
         {
+            status.Enqueue("Start Scrolling");
             ChromeOptions chromeOptions = new ChromeOptions();
             chromeOptions.AddArgument("--disable-images");
             string directory = @"C:\Users\suren.vanyan\source\repos\suren-vanyan\ADVANCED_OOP\Staff.AmScrapping\Staff.AmScrapping\bin\Debug\netcoreapp2.1";
@@ -54,6 +55,7 @@ namespace Staff.AmScrapping
 
             string returnVaule= chromeDriver.PageSource;
             chromeDriver.Close();
+            status.Enqueue("End Scrolling");
             return returnVaule;
         }
     }
