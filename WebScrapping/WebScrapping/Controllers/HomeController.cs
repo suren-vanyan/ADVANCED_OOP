@@ -4,9 +4,9 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using ApplicationMVC.Models;
+using WebScrapping.Models;
 
-namespace ApplicationMVC.Controllers
+namespace WebScrapping.Controllers
 {
     public class HomeController : Controller
     {

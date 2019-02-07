@@ -10,9 +10,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
-using ApplicationMVC.Models;
+using WebScrapping.Models;
 
-namespace ApplicationMVC
+namespace WebScrapping
 {
     public class Startup
     {
@@ -36,8 +36,8 @@ namespace ApplicationMVC
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            services.AddDbContext<ApplicationMVCContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("ApplicationMVCContext")));
+            services.AddDbContext<WebScrappingContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("WebScrappingContext")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

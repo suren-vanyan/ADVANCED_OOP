@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace ApplicationMVC.Migrations
+namespace WebScrapping.Migrations
 {
     public partial class Initial : Migration
     {
