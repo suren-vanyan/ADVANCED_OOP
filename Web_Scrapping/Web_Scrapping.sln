@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2050
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web_Scrapping", "Web_Scrapping\Web_Scrapping.csproj", "{FE9C5532-A19C-4B35-9493-E67AC88C0905}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Web_Scrapping", "Web_Scrapping\Web_Scrapping.csproj", "{FE9C5532-A19C-4B35-9493-E67AC88C0905}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApplicationMVC", "ApplicationMVC\ApplicationMVC.csproj", "{EE38D811-E24D-4B72-AC0B-A4C266AB1D8D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{FE9C5532-A19C-4B35-9493-E67AC88C0905}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FE9C5532-A19C-4B35-9493-E67AC88C0905}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FE9C5532-A19C-4B35-9493-E67AC88C0905}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE38D811-E24D-4B72-AC0B-A4C266AB1D8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE38D811-E24D-4B72-AC0B-A4C266AB1D8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE38D811-E24D-4B72-AC0B-A4C266AB1D8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE38D811-E24D-4B72-AC0B-A4C266AB1D8D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
